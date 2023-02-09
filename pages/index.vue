@@ -9,7 +9,8 @@
 
 <script setup lang="ts">
 import { config } from 'process';
-
+import moment from "moment";
+ var date = moment().format("YYYY-MM-DD");
 
 useHead({
     title: '3Squared',
@@ -34,7 +35,7 @@ useHead({
     ]
 })
 
-const url = 'https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/2023-02-09 00:00:00/2023-02-09 23:59:59'
+const url = 'https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/' + date + ' 00:00:00/' + date + ' 23:59:59'
 
 const { data: schedule } = await useFetch(
     url, {
