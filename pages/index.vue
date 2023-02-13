@@ -1,5 +1,5 @@
 <template>
-   <header>
+    <header>
         <!-- this is the navbar -->
         <nav>
             <ul>
@@ -8,31 +8,38 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-    </header>  
+    </header>
+
 
     <div id="map-container">
-    <div id="sidebar">
-        <h1>Header</h1>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
+        <div id="sidebar">
+            <h1>Train Information</h1>
+            <p> Schdeule</p>
+            <p> Consist</p>
+            <p> Notes</p>
+            
 
-    </div>
+        </div>
 
-    <!-- this is the map -->
-    <div id="leafletmap" ></div>
-    <p v-for="s in schedule">{{ s }}</p>
+        <!-- this is the map -->
+        <div id="leafletmap"></div>
+        <p v-for="s in schedule">{{ s }}</p>
     </div>
+    <!-- this is the footer -->
+    <footer>
+        <p>Copyright &copy; 2023 3Squared</p>
+    </footer>
+
 </template>
 
-
 <script setup lang="ts">
-import { config } from "process";
 
+import { config } from 'process';
+import moment from "moment";
+import fs from 'fs';
+import tiplocCodes from "public/tiploc.js";
 
+const date = moment().format("YYYY-MM-DD");
 
 
 useHead({
@@ -58,51 +65,71 @@ useHead({
     ],
 });
 
-const url =
-    "https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/2023-02-09 00:00:00/2023-02-09 23:59:59";
+const tiplocCodeString = tiplocCodes.join(",");
+const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/${tiplocCodeString}/${date} 00:00:00/${date} 23:59:59`;
+
 
 const { data: schedule } = await useFetch(url, {
-    headers: {
-        "X-ApiVersion": "1",
-        "X-ApiKey": useRuntimeConfig().apiKey,
-    },
+  headers: {
+    "X-ApiVersion": "1",
+    "X-ApiKey": useRuntimeConfig().apiKey,
+  },
 });
 
 </script>
 
 <style scoped>
-/*Sidebar*/
 
-#sidebar  {
+footer {
+
+    background-color: #f9f9f9;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #000;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+/*test */
+
+/*Sidebar*/ 
+#sidebar {
     width: 200px;
-    background-color: #e8e6e6;
+    background-color: #e6f0f5;
     float: left;
     padding-left: 20px;
     height: 500px;
+    border-right: 4px solid rgb(255, 255, 255);
+    display: none;
 }
-/*map*/
 
+/*map*/ 
 #leafletmap {
     height: 500px;
-    width: calc(100%-300px);
+    width: calc(100%-100px);
     float: center;
     padding-left: 20px;
-
+    
 }
 
-/*nav*/
+/*nav*/ 
 nav {
-    background-color: #fff;
+    background-color: #f0f5f5;
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #3282b8;
     width: 100%;
 }
 
 nav a {
-    color: #333;
+    color: #3282b8;
     text-decoration: none;
     font-size: 1.4em;
     margin-right: 20px;
@@ -129,7 +156,7 @@ nav a:before {
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #333;
+    background-color: #3282b8;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease-in-out;
