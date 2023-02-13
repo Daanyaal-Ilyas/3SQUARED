@@ -11,7 +11,7 @@
     </header>  
 
     <div id="map-container">
-    <div id="sidebar">
+    <div id="sidebar" style="position: absolute; z-index: 1;">
         <h1>Header</h1>
         <p> hello</p>
         <p> hello</p>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- this is the map -->
-    <div id="leafletmap"></div>
+    <div id="leafletmap" style="position: relative; z-index: 0;"></div>
     <p v-for="s in schedule">{{ s }}</p>
     </div>
 </template>
@@ -75,9 +75,10 @@ const { data: schedule } = await useFetch(url, {
 
 #sidebar  {
     width: 200px;
-    background-color: #f9f9f9;
+    background-color: #e8e6e6;
     float: left;
     padding-left: 20px;
+    height: 500px;
 }
 /*map*/
 
