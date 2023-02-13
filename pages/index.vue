@@ -1,5 +1,5 @@
 <template>
-   <header>
+    <header>
         <!-- this is the navbar -->
         <nav>
             <ul>
@@ -8,24 +8,29 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-    </header>  
+    </header>
 
     <div id="map-container">
-    <div id="sidebar">
-        <h1>Header</h1>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
-        <p> hello</p>
+        <div id="sidebar">
+            <h1>Header</h1>
+            <p> hello</p>
+            <p> hello</p>
+            <p> hello</p>
+            <p> hello</p>
+            <p> hello</p>
+            <p> hello</p>
 
-    </div>
+        </div>
 
-    <!-- this is the map -->
-    <div id="leafletmap" ></div>
-    <p v-for="s in schedule">{{ s }}</p>
+        <!-- this is the map -->
+        <div id="leafletmap"></div>
+        <p v-for="s in schedule">{{ s }}</p>
     </div>
+    <!-- this is the footer -->
+    <footer>
+        <p>Copyright &copy; 2023 3Squared</p>
+    </footer>
+
 </template>
 
 
@@ -71,26 +76,42 @@ const { data: schedule } = await useFetch(url, {
 </script>
 
 <style scoped>
-/*Sidebar*/
+footer {
+    background-color: #f9f9f9;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #000;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
 
-#sidebar  {
+
+/*Sidebar*/ 
+#sidebar {
     width: 200px;
     background-color: #e8e6e6;
     float: left;
     padding-left: 20px;
     height: 500px;
+    border-right: 4px solid rgb(255, 255, 255);
 }
-/*map*/
 
+/*map*/ 
 #leafletmap {
     height: 500px;
     width: calc(100%-300px);
     float: center;
     padding-left: 20px;
-
+    
 }
 
-/*nav*/
+/*nav*/ 
 nav {
     background-color: #fff;
     height: 60px;
