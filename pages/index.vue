@@ -12,13 +12,11 @@
 
     <div id="map-container">
         <div id="sidebar">
-            <h1>Header</h1>
-            <p> hello</p>
-            <p> hello</p>
-            <p> hello</p>
-            <p> hello</p>
-            <p> hello</p>
-            <p> hello</p>
+            <h1>Train Information</h1>
+            <p> Schdeule</p>
+            <p> Consist</p>
+            <p> Notes</p>
+            
 
         </div>
 
