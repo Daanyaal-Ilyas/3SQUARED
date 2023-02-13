@@ -78,14 +78,13 @@ const { data: schedule } = await useFetch(url, {
     background-color: #f9f9f9;
     float: left;
     padding-left: 20px;
-
 }
 /*map*/
 
 #leafletmap {
     height: 500px;
-    width: calc(100% - 200px);
-    float: right;
+    width: calc(100%-300px);
+    float: center;
     padding-left: 20px;
 
 }
