@@ -45,7 +45,8 @@ useHead({
     ],
 });
 
-const url = 'https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/' + date + ' 00:00:00/' + date + ' 23:59:59'
+const url = 'https://traindata-stag-api.railsmart.io/api/trains/tiploc/AYLS302AYLS792,AYLSVJN,AYLSPWY,WHATFHH,AYLSWAD,AYLESFD,AYLERSD,ALSHAM,AYSHMS,AYNHOJ,AACHEN,ABHLJN,ABHL811,ABHLTB,ALERTNJ,ALERTN4,ALLGARC,ALLGREV,ALNGEJN,ALLGFHH,ALNGNJN,ALNGJN,AYRRWRD/' + date + ' 00:00:00/' + date + ' 23:59:59'
+
 
 
 const { data: schedule } = await useFetch(url, {
@@ -54,6 +55,8 @@ const { data: schedule } = await useFetch(url, {
         "X-ApiKey": useRuntimeConfig().apiKey,
     },
 });
+
+
 </script>
 
 <style scoped>

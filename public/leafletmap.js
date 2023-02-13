@@ -7,4 +7,5 @@ L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
 }).addTo(map);
-var marker = L.marker([51.5979250073,-0.1202099313],[57.6095763828,-4.913846165]).addTo(map)
+var marker = L.marker([51.5979250073,-0.1202099313]).addTo(map)
+
