@@ -26,6 +26,11 @@
     <div id="leafletmap" ></div>
     <p v-for="s in schedule">{{ s }}</p>
     </div>
+    <!-- this is the footer -->
+<footer>
+    <p>Copyright &copy; 2023 3Squared</p>
+</footer>
+
 </template>
 
 
@@ -71,14 +76,31 @@ const { data: schedule } = await useFetch(url, {
 </script>
 
 <style scoped>
+footer {
+    background-color: #f0f5f5;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #3282b8;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+    color: #3282b8;
+}
+
+
 /*Sidebar*/
 
 #sidebar  {
     width: 200px;
-    background-color: #e8e6e6;
+    background-color: #e6f0f5;
     float: left;
     padding-left: 20px;
     height: 500px;
+    border-right: 4px solid #ffffff;
 }
 /*map*/
 
@@ -92,17 +114,17 @@ const { data: schedule } = await useFetch(url, {
 
 /*nav*/
 nav {
-    background-color: #fff;
+    background-color: #f0f5f5;
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #3282b8;
     width: 100%;
 }
 
 nav a {
-    color: #333;
+    color: #3282b8;
     text-decoration: none;
     font-size: 1.4em;
     margin-right: 20px;
@@ -129,7 +151,7 @@ nav a:before {
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #333;
+    background-color: #3282b8;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease-in-out;
