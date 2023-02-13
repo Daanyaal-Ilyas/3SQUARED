@@ -10,6 +10,7 @@
         </nav>
     </header>
 
+
     <div id="map-container">
         <div id="sidebar">
             <h1>Train Information</h1>
@@ -31,11 +32,14 @@
 
 </template>
 
-
 <script setup lang="ts">
-import { config } from "process";
 
+import { config } from 'process';
+import moment from "moment";
+import fs from 'fs';
+import tiplocCodes from "public/tiploc.js";
 
+const date = moment().format("YYYY-MM-DD");
 
 
 useHead({
@@ -61,19 +65,21 @@ useHead({
     ],
 });
 
-const url =
-    "https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/2023-02-09 00:00:00/2023-02-09 23:59:59";
+const tiplocCodeString = tiplocCodes.join(",");
+const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/${tiplocCodeString}/${date} 00:00:00/${date} 23:59:59`;
+
 
 const { data: schedule } = await useFetch(url, {
-    headers: {
-        "X-ApiVersion": "1",
-        "X-ApiKey": useRuntimeConfig().apiKey,
-    },
+  headers: {
+    "X-ApiVersion": "1",
+    "X-ApiKey": useRuntimeConfig().apiKey,
+  },
 });
 
 </script>
 
 <style scoped>
+
 footer {
 
     background-color: #f9f9f9;
