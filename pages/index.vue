@@ -86,7 +86,6 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-
     border-top: 1px solid #000;
     font-size: 1.2em;
     font-family: Arial, sans-serif;
