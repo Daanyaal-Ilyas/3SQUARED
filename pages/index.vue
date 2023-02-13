@@ -11,7 +11,7 @@
     </header>  
 
     <div id="map-container">
-    <div id="sidebar" style="position: absolute; z-index: 1;">
+    <div id="sidebar">
         <h1>Header</h1>
         <p> hello</p>
         <p> hello</p>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- this is the map -->
-    <div id="leafletmap" style="position: relative; z-index: 0;"></div>
+    <div id="leafletmap" ></div>
     <p v-for="s in schedule">{{ s }}</p>
     </div>
 </template>
