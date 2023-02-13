@@ -99,12 +99,13 @@ footer {
     padding-left: 20px;
     height: 500px;
     border-right: 4px solid rgb(255, 255, 255);
+    display: none;
 }
 
 /*map*/ 
 #leafletmap {
     height: 500px;
-    width: calc(100%-300px);
+    width: calc(100%-100px);
     float: center;
     padding-left: 20px;
     
