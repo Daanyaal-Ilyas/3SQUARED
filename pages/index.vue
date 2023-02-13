@@ -36,7 +36,10 @@
 
 import { config } from 'process';
 import moment from "moment";
- var date = moment().format("YYYY-MM-DD");
+import fs from 'fs';
+import tiplocCodes from "public/tiploc.js";
+
+const date = moment().format("YYYY-MM-DD");
 
 
 useHead({
@@ -62,17 +65,16 @@ useHead({
     ],
 });
 
-const url = 'https://traindata-stag-api.railsmart.io/api/trains/tiploc/AYLS302AYLS792,AYLSVJN,AYLSPWY,WHATFHH,AYLSWAD,AYLESFD,AYLERSD,ALSHAM,AYSHMS,AYNHOJ,AACHEN,ABHLJN,ABHL811,ABHLTB,ALERTNJ,ALERTN4,ALLGARC,ALLGREV,ALNGEJN,ALLGFHH,ALNGNJN,ALNGJN,AYRRWRD/' + date + ' 00:00:00/' + date + ' 23:59:59'
-
+const tiplocCodeString = tiplocCodes.join(",");
+const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/${tiplocCodeString}/${date} 00:00:00/${date} 23:59:59`;
 
 
 const { data: schedule } = await useFetch(url, {
-    headers: {
-        "X-ApiVersion": "1",
-        "X-ApiKey": useRuntimeConfig().apiKey,
-    },
+  headers: {
+    "X-ApiVersion": "1",
+    "X-ApiKey": useRuntimeConfig().apiKey,
+  },
 });
-
 
 </script>
 
