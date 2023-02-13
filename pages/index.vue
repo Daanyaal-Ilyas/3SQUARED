@@ -1,5 +1,5 @@
 <template>
-    <header>
+   <header>
         <!-- this is the navbar -->
         <nav>
             <ul>
@@ -8,15 +8,32 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-    </header>
+    </header>  
+
+    <div id="map-container">
+    <div id="sidebar">
+        <h1>Header</h1>
+        <p> hello</p>
+        <p> hello</p>
+        <p> hello</p>
+        <p> hello</p>
+        <p> hello</p>
+        <p> hello</p>
+
+    </div>
+
     <!-- this is the map -->
-    <p>Map</p>
-    <div id="leafletmap"></div>
+    <div id="leafletmap" ></div>
     <p v-for="s in schedule">{{ s }}</p>
+    </div>
 </template>
+
 
 <script setup lang="ts">
 import { config } from "process";
+
+
+
 
 useHead({
     title: "3Squared",
@@ -50,13 +67,30 @@ const { data: schedule } = await useFetch(url, {
         "X-ApiKey": useRuntimeConfig().apiKey,
     },
 });
+
 </script>
 
 <style scoped>
-#leafletmap {
+/*Sidebar*/
+
+#sidebar  {
+    width: 200px;
+    background-color: #e8e6e6;
+    float: left;
+    padding-left: 20px;
     height: 500px;
 }
+/*map*/
 
+#leafletmap {
+    height: 500px;
+    width: calc(100%-300px);
+    float: center;
+    padding-left: 20px;
+
+}
+
+/*nav*/
 nav {
     background-color: #fff;
     height: 60px;
