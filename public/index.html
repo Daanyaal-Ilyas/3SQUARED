@@ -34,13 +34,6 @@
       getData()
         .then((myJson) => {
           console.dir(myJson);
-
-          myJson.forEach((obj) => {
-            console.log(obj);
-            displayList.push(
-              `<li>${obj.toc_Name}</li>`
-            );
-          });
           document.getElementById("dom").innerHTML = displayList.join("");
         })
         .catch(() => console.log("Json not working"));
