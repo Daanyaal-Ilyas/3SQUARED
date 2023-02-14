@@ -59,21 +59,21 @@ button:hover::after {
   width: 100%;
 }
 
-footer {
+    footer {
+      background-color: #f9f9f9;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid #000;
+      font-size: 1.2em;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
 
-    background-color: #f9f9f9;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position:relative;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #000;
-    font-size: 1.2em;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
 /*test */
 
 /*Sidebar*/ 
