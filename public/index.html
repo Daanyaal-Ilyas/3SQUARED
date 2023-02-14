@@ -7,24 +7,20 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <title>Api Demos</title>
+    <title>Trains</title>
+
+    <nav>
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li><nuxt-link to="/about">About</nuxt-link></li>
+          <li><nuxt-link to="/contact">Contact</nuxt-link></li>
+      </ul>
+  </nav>
+</header>
   </head>
   <body>
-    <div id="leafletmap" style="height: 500px;"></div>
+    <div id="leafletmap" style="height: 855px;"></div>
     <script src="leafletmap.js"></script>
-    <div class="container">
-      <header>
-        <h1>Fetch REST Demos</h1>
-      </header>
-      <main>
-        <section>
-          <div>
-            <p>Hosted on Node/Express</p>
-          </div>
-          <ul id="dom"></ul>
-        </section>
-      </main>
-    </div>
   </body>
   <script>
     (function () {
@@ -39,8 +35,6 @@
         .then((myJson) => {
           console.dir(myJson);
 
-          //
-
           myJson.forEach((obj) => {
             console.log(obj);
             displayList.push(
@@ -49,7 +43,8 @@
           });
           document.getElementById("dom").innerHTML = displayList.join("");
         })
-        .catch(() => console.log("damn that Jason"));
+        .catch(() => console.log("Json not working"));
     })();
+    
   </script>
 </html>
