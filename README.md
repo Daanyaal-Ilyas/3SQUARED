@@ -1,49 +1,18 @@
-# Nuxt 3 Minimal Starter
+# Demo Site for API Calls
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Node / express used for a basic webserver to enable fetch calls to an API.
 
-## Setup
+The static files are stored in the public folder.
 
-Make sure to install the dependencies:
+This is configured in the app.js with:
 
-```bash
-# yarn
-yarn install
+```app.use(express.static("./public"));```
 
-# npm
-npm install
+# Set up in the Docker file
 
-# pnpm
-pnpm install
+To build docker run:
+
 ```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
+docker build . -t mustbebuilt/node-web-app
+docker run -p 49160:3000 -v C:/Users/student/Desktop/myRepos/node-express-static-for-fetch-api/:/usr/src/app --name "fetchapinodeexpress" mustbebuilt/node-web-app 
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-
-## 3SQUARED INFO
-
-For API Access, make a .env at root with the following Variable(s):
-
-TRAINAPIKEY='{API KEY HERE}'

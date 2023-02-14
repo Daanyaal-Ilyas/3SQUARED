@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .container{
+    max-width: 680px;
+    margin:auto;
+  }
+  label {
+    display: block;
+  }
+  form>div{
+    margin-bottom: 15px;
+  }
+  input[type="text"],
+  textarea {
+    font-size: 1.2rem;
+    padding: 4px;
+  }
+  div.radio{
+    display: flex;
+  }
+  div.radio > label{
+    display: inline;
+    flex: 0 0 50px;
+  }
+  div.radio > label > input{
+    margin-right: 10px;
+  }
