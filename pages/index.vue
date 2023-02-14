@@ -16,9 +16,8 @@
             <h1 id="header">Train Information</h1>
             <button> Schdeule</button>
             <button> Consist</button>
-            <button> Notes</button>
-            
-
+            <button id="button-hide"> Notes</button>
+            <label id="hide">hello</label>
         </div>
 
         <!-- this is the map -->
@@ -247,5 +246,9 @@ nav a:before {
 nav a:hover:before {
     transform: scaleX(1);
     transform-origin: left;
+}
+
+#hide{
+  display: none;
 }
 </style>

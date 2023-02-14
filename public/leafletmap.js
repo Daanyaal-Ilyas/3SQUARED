@@ -18,3 +18,15 @@ var marker = L.marker([51.5, -0.09]).addTo(map).on("click", function (e) {
     }
 });
 
+//button
+const button = document.getElementById("button-hide");
+const label = document.getElementById("hide");
+
+button.addEventListener("click", function() {
+    if (label.style.display === "block") {
+      label.style.display = "none"
+    }
+    else {
+        label.style.display ="block"
+    }
+});
