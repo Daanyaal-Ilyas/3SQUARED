@@ -37,32 +37,49 @@
     </footer>
   </template>
   
-  <script setup lang="ts"></script>
+  <script setup lang="ts">
+  useHead({
+    title: "3Squared",
+    link: [
+        {
+            rel: "stylesheet",
+            integrity: "sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=",
+            href: "https://unpkg.com/leaflet@1.9.3/dist/leaflet.css",
+            crossorigin: "",
+        },
+    ],
+    script: [
+        {
+            src: "https://unpkg.com/leaflet@1.9.3/dist/leaflet.js",
+            integrity: "sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=",
+            crossorigin: "",
+        },
+        {
+            src: "/leafletmap.js",
+            body: true,
+        },
+    ],
+});
+</script>
   
   <style scoped>
-     
-  
-   
-  
-    footer {
-      background-color: #f9f9f9;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-      border-top: 1px solid #000;
-      font-size: 1.2em;
-      font-family: Arial, sans-serif;
-      color: #333;
-    }
-  
- 
+  /* Reset default margin and padding */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    /*nav*/ 
-    nav {
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+
+
+  nav {
     background-color: #f0f5f5;
     height: 60px;
     display: flex;
@@ -111,6 +128,71 @@ nav a:hover:before {
     transform-origin: left;
 }
 
+  /* Main content */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  address {
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin-bottom: 1rem;
+  }
+
+  ul li {
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: #3282b8;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+  }
+
+  a:hover {
+    color: #005d9a;
+  }
+
+ 
+
+  footer p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  
+   
+  
+    footer {
+      padding: 1rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+      background-color: #f9f9f9;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute ;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid #000;
+      font-size: 1.2em;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+  
+ 
 #hide{
   display: none;
 }
