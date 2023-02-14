@@ -13,10 +13,10 @@
 
     <div id="map-container">
         <div id="sidebar">
-            <h1>Train Information</h1>
-            <p> Schdeule</p>
-            <p> Consist</p>
-            <p> Notes</p>
+            <h1 id="header">Train Information</h1>
+            <button> Schdeule</button>
+            <button> Consist</button>
+            <button> Notes</button>
             
 
         </div>
@@ -113,6 +113,22 @@ fetch(url, {
 </script>
 
 <style scoped>
+#header{
+    font-size: 24px;
+}
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  margin-right: 10px;
+
+}
+button:hover {
+  background-color: #16bbf7;
+}
 
 footer {
 
