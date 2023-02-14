@@ -69,14 +69,6 @@ const tiplocCodeString = tiplocCodes.join(",");
 const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/${tiplocCodeString}/${date} 00:00:00/${date} 23:59:59`;
 
 
-const { data: schedule } = await useFetch(url, {
-  headers: {
-    "X-ApiVersion": "1",
-    "X-ApiKey": useRuntimeConfig().apiKey,
-  },
-});
-
-
 fetch(url, {
   headers: {
     "X-ApiVersion": "1",
@@ -106,6 +98,36 @@ fetch(url, {
 })
 .catch(error => console.error(error));
 
+
+const { data: schedule } = await useFetch(url, {
+    headers: {
+        "X-ApiVersion": "1",
+        "X-ApiKey": useRuntimeConfig().apiKey,
+    },
+});
+
+const apiResponse = fs.readFileSync('api_response.json', 'utf-8');
+const trains = apiResponse.trim().split('\n').map(line => JSON.parse(line));
+
+for (const train of trains) {
+    const { activationId, scheduleId } = train;
+
+    const url = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
+    console.log('Before fetch:', url);
+
+    fetch(url, {
+        headers: {
+            "X-ApiVersion": "1",
+            "X-ApiKey": useRuntimeConfig().apiKey,
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Fetch successful:', data);
+            // Do something with the data
+        })
+        .catch(error => console.error('Fetch error:', error));
+}
 
 
 
