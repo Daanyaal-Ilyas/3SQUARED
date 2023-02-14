@@ -13,10 +13,10 @@
 
     <div id="map-container">
         <div id="sidebar">
-            <h1>Train Information</h1>
-            <p> Schdeule</p>
-            <p> Consist</p>
-            <p> Notes</p>
+            <h1 id="header">Train Information</h1>
+            <button> Schdeule</button>
+            <button> Consist</button>
+            <button> Notes</button>
             
 
         </div>
@@ -131,9 +131,40 @@ for (const train of trains) {
 
 
 
+
 </script>
 
 <style scoped>
+#header{
+    font-size: 24px;
+}
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  position: relative;
+}
+
+button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: black;
+  transition: width 0.2s ease-in-out;
+}
+
+button:hover::after {
+  width: 100%;
+}
 
 footer {
 
@@ -142,7 +173,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position:relative;
     bottom: 0;
     width: 100%;
     border-top: 1px solid #000;
