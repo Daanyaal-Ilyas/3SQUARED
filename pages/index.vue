@@ -78,19 +78,23 @@ const { data: schedule } = await useFetch(url, {
 
 
 fetch(url, {
-headers: {
-"X-ApiVersion": "1",
-"X-ApiKey": useRuntimeConfig().apiKey,
-},
+  headers: {
+    "X-ApiVersion": "1",
+    "X-ApiKey": useRuntimeConfig().apiKey,
+  },
 })
 .then(response => response.json())
 .then(data => {
-fs.writeFile('api_response.json', JSON.stringify(data), 'utf8', (err: Error | null) => {
-if (err) throw err;
-console.log('The file has been saved!');
-});
+  data.forEach((trainData: any) => {
+    fs.appendFile('api_response.json', JSON.stringify(trainData) + '\n', 'utf8', (err: Error | null) => {
+      if (err) throw err;
+      console.log('The data has been saved!');
+    });
+  });
 })
 .catch(error => console.error(error));
+
+
 
 
 </script>
