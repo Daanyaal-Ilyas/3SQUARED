@@ -17,8 +17,11 @@
             <button> Schdeule</button>
             <button> Consist</button>
             <button id="button-hide"> Notes</button>
-            <label id="hide">hello</label>
-        </div>
+            <div id="hide">
+              <label >Notes</label>
+              <input type="text"/>
+            </div>
+          </div>
 
         <!-- this is the map -->
         <div id="leafletmap"></div>
