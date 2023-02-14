@@ -25,11 +25,18 @@
   <script>
     (function () {
       let api = "http://localhost:3000/api";
+      let displayList = [];
       async function getData() {
         const response = await fetch(api);
         const json = await response.json();
         return json;
       }
+      getData()
+        .then((myJson) => {
+          console.dir(myJson);
+          document.getElementById("dom").innerHTML = displayList.join("");
+        })
+        .catch(() => console.log("Json not working"));
     })();
   </script>
 </html>
