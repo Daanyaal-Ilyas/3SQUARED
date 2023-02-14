@@ -3,9 +3,9 @@
         <!-- this is the navbar -->
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><nuxt-link to="/about">About</nuxt-link></li>
+                <li><nuxt-link to="/contact">Contact</nuxt-link></li>
             </ul>
         </nav>
     </header>
@@ -128,10 +128,6 @@ for (const train of trains) {
         })
         .catch(error => console.error('Fetch error:', error));
 }
-
-
-
-
 </script>
 
 <style scoped>
