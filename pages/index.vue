@@ -115,7 +115,6 @@ fetch(url, {
 <style scoped>
 #header{
     font-size: 24px;
-
 }
 button {
   background: none;
@@ -125,10 +124,24 @@ button {
   color: inherit;
   cursor: pointer;
   margin-right: 10px;
-
+  text-decoration: none;
+  position: relative;
 }
-button:hover {
-  background-color: #16bbf7;
+
+button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: black;
+  transition: width 0.2s ease-in-out;
+}
+
+button:hover::after {
+  width: 100%;
 }
 
 footer {
