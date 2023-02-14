@@ -22,5 +22,7 @@ export default [
     "ALNGNJN",
     "ALNGJN",
     "AYRRWRD",
+    "LEEDS",
+    "NEVLTMD",
   ];
   
