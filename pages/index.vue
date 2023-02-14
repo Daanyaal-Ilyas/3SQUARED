@@ -86,13 +86,27 @@ fetch(url, {
 .then(response => response.json())
 .then(data => {
   data.forEach((trainData: any) => {
-    fs.appendFile('api_response.json', JSON.stringify(trainData) + '\n', 'utf8', (err: Error | null) => {
-      if (err) throw err;
-      console.log('The data has been saved!');
-    });
+    if (fs.existsSync('api_response.json')) {
+      fs.readFile('api_response.json', 'utf8', (err, contents) => {
+        if (err) throw err;
+        if (!contents.includes(JSON.stringify(trainData))) {
+          fs.appendFile('api_response.json', JSON.stringify(trainData) + '\n', 'utf8', (err: Error | null) => {
+            if (err) throw err;
+            console.log('The data has been saved!');
+          });
+        }
+      });
+    } else {
+      fs.appendFile('api_response.json', JSON.stringify(trainData) + '\n', 'utf8', (err: Error | null) => {
+        if (err) throw err;
+        console.log('The data has been saved!');
+      });
+    }
   });
 })
 .catch(error => console.error(error));
+
+
 
 
 
