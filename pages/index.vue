@@ -115,6 +115,7 @@ fetch(url, {
 <style scoped>
 #header{
     font-size: 24px;
+
 }
 button {
   background: none;
@@ -137,7 +138,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position:relative;
     bottom: 0;
     width: 100%;
     border-top: 1px solid #000;
