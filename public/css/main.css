@@ -141,6 +141,7 @@ nav a:before {
   transition: transform 0.3s ease-in-out;
 }
 
+
 nav a:hover:before {
   transform: scaleX(1);
   transform-origin: left;
@@ -148,7 +149,6 @@ nav a:hover:before {
 #hide{
   display: none;
 }
-<<<<<<< Updated upstream
 
 #hide-train{
   display: none;
@@ -158,9 +158,7 @@ input{
   width: 180px;
   height: 10px;
 }
-=======
 img{
   height: 20px;
   width: 100px;;
 }
->>>>>>> Stashed changes
