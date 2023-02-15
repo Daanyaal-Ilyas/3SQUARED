@@ -1,6 +1,10 @@
 import express, { json } from 'express';
 import fetch from 'node-fetch';
 import fs from 'fs';
+import moment from "moment";
+
+
+const date = moment().format("YYYY-MM-DD");
 
 const app = express();
 
@@ -19,7 +23,7 @@ async function GetSchedule() {
     
     //Check if database holds todays schedule
 
-    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/2023-02-15 00:00:00/2023-02-15 23:59:59`;
+    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${date} 00:00:00/${date} 23:59:59`;
     const options = {
         method: 'GET',
         headers: {
