@@ -78,6 +78,7 @@ footer {
     height: 500px;
     border-right: 4px solid rgb(255, 255, 255);
     display: none;
+    position: absolute;
 }
 /*map*/ 
 #leafletmap {
