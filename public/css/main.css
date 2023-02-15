@@ -39,6 +39,7 @@ button {
   margin-right: 10px;
   text-decoration: none;
   position: relative;
+  font-size: 0.9rem;
 }
 button::after {
   content: '';
