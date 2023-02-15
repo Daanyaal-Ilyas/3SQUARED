@@ -12,7 +12,7 @@ L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 
 
 //button
-const button = document.getElementById("button-hide");
+const button = document.getElementById("button-Notes");
 const label = document.getElementById("hide");
 
 button.addEventListener("click", function() {
@@ -23,3 +23,15 @@ button.addEventListener("click", function() {
         label.style.display ="block"
     }
 });
+//button2
+const button2 = document.getElementById("button-Progress");
+const label2 = document.getElementById("hide-train");
+
+button2.addEventListener("click", function () {
+  if (label2.style.display === "block") {
+    label2.style.display = "none"
+  }
+  else {
+    label2.style.display = "block"
+  }
+})

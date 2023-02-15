@@ -138,6 +138,10 @@ nav a:hover:before {
   display: none;
 }
 
+#hide-train{
+  display: none;
+}
+
 input{
   width: 180px;
   height: 10px;
