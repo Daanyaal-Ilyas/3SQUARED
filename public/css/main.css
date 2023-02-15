@@ -77,8 +77,6 @@ footer {
     padding-left: 20px;
     height: 500px;
     border-right: 4px solid rgb(255, 255, 255);
-    display: none;
-    position: absolute;
 }
 /*map*/ 
 #leafletmap {
@@ -86,7 +84,6 @@ footer {
     width: calc(100%-200px);
     float: center;
     padding-left: 20px;
-    
 }
 /*nav*/ 
 nav {
