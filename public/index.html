@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <title>Trains</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div id="leafletmap" style="height: 855px;"></div>
+    <div id="dom"></div>
+    <script src="leafletmap.js"></script>
+    <script>
+
+      let currentTrainRoute = ""
+
+      (function () {
+
+        async function getData(url) {
+          const response = await fetch(url);
+          const json = await response.json();
+          return json;
+        }
+
+        let api_trainschedule = "http://localhost:3000/api/trainschedule";
+        let api_livetrain = "http://localhost:3000/api/livetrain";
+        let displayList = [];
+
+        getData(api_livetrain + "/17836976/13672490")
+          .then((myJson) => {
+            currentTrainRoute = myJson
+            for (const station of myJson){
+              if(station.latLong){
+                const lat = station.latLong.latitude
+                const long = station.latLong.longitude
+                L.marker([lat, long]).addTo(map);
+              }
+            }
+          })
+          .catch(err => console.log("Error: " + err));
+
+      })();
+
+    </script>
+  </body>
+</html>
