@@ -11,3 +11,15 @@ L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+//button
+const button = document.getElementById("button-hide");
+const label = document.getElementById("hide");
+
+button.addEventListener("click", function() {
+    if (label.style.display === "block") {
+      label.style.display = "none"
+    }
+    else {
+        label.style.display ="block"
+    }
+});
