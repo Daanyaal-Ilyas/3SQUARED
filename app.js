@@ -35,7 +35,7 @@ async function GetSchedule() {
 
 app.get("/api/schedule", async function (req, resp) {
     let schedule = await GetSchedule()
-    resp.send(sc)
+    resp.send(schedule)
 })
 
 app.get("/api/trainschedule", async function (req, resp) {

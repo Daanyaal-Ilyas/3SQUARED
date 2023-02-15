@@ -63,9 +63,22 @@
         return json;
       }
 
+      let api_schedule = "http://localhost:3000/api/schedule";
       let api_trainschedule = "http://localhost:3000/api/trainschedule";
       let api_livetrain = "http://localhost:3000/api/livetrain";
       let displayList = [];
+
+      let trains = []
+
+      getData(api_schedule)
+        .then((json) => {
+          for (const schedule of json){
+            trains.push({ activationId: schedule.activationId, scheduleId: schedule.scheduleId })
+          }
+        })
+        .catch(err => console.log("Error: " + err));
+
+      console.log(trains)
 
       getData(api_trainschedule + "/17839940/13669527")
         .then((myJson) => {
@@ -76,6 +89,28 @@
               const lat = station.latLong.latitude
               const long = station.latLong.longitude
               L.marker([lat, long], {icon: blueIcon}).addTo(map).on("click", function(e){
+                             let sidebar = document.getElementById("sidebar")
+                if (sidebar.style.display === "block") {
+                  sidebar.style.display = "none"
+                }
+                else {
+                  sidebar.style.display = "block"
+                }
+              });
+            }
+          }
+        })
+        .catch(err => console.log("Error: " + err));
+
+      getData(api_livetrain + "/17839940/13669527") 
+        .then((myJson) => {
+          console.log(myJson)
+          currentTrainRoute = myJson
+          for (const station of myJson){
+            if(station.latLong){
+              const lat = station.latLong.latitude
+              const long = station.latLong.longitude
+              L.marker([lat, long], {icon: redIcon}).addTo(map).on("click", function(e){
                              let sidebar = document.getElementById("sidebar")
                 if (sidebar.style.display === "block") {
                   sidebar.style.display = "none"
