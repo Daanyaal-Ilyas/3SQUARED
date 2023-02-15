@@ -22,10 +22,32 @@ app.get("/api", async function(req, resp){
         }
     };
     const apiResp = await fetch(url, options);
-    const tiploc = await apiResp.json();
+    const json = await apiResp.json();
 
-	const trainschedule = [];
     // Loop over the data in the response and make additional API calls for each item
+
+
+	for (const item of json) {
+        const { activationId, scheduleId } = item;
+        const url2 = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
+        const options2 = {
+            method: 'GET',
+            headers: {
+                'X-ApiVersion': 1,
+                'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
+            }
+        };
+        const apiResp2 = await fetch(url2, options2);
+        const json2 = await apiResp2.json();
+
+		//temp checking if i get a reponse 
+		console.log(json2)
+    }
+
+    // Return the original response from the first API call
+    resp.json(json);
+})
+
     for (const item of json) {
         const { activationId, scheduleId } = item;
         const url2 = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
@@ -37,17 +59,11 @@ app.get("/api", async function(req, resp){
             }
         };
         const apiResp2 = await fetch(url2, options2);
-        const trainschedules = await apiResp2.json();
+        const json2 = await apiResp2.json();
 
-		//Add the json2 object to the trainschedule
-		trainschedule.push(trainschedules);
+		//temp checking if i get a reponse 
+		console.log(json2)
     }
-	const responseObj = {
-        json: tiploc,
-        json2: trainschedule
-    };
-    resp.json(responseObj);
-})
 
 
 
