@@ -40,10 +40,20 @@
                 </div>
               </div>
               <!--this is the map-->
-    <div id="leafletmap" style="height: 500px;"></div>
+    <div id="leafletmap" style="height: 800px;"></div>
     <div id="dom"></div>
     <script src="leafletmap.js"></script>
     <script>
+
+    var blueIcon = L.icon({
+        iconUrl: '/icons/Blue.png',
+        iconSize:     [20, 20], // size of the icon
+    });
+
+    var redIcon = L.icon({
+        iconUrl: '/icons/Red.png',
+        iconSize:     [10, 10], // size of the icon
+    });
 
       let currentTrainRoute = ""
 
@@ -57,27 +67,47 @@
       let api_livetrain = "http://localhost:3000/api/livetrain";
       let displayList = [];
 
-      getData(api_livetrain + "/17836976/13672490")
+      getData(api_trainschedule + "/17839940/13669527")
         .then((myJson) => {
+          console.log(myJson)
           currentTrainRoute = myJson
           for (const station of myJson){
             if(station.latLong){
               const lat = station.latLong.latitude
               const long = station.latLong.longitude
-              L.marker([lat, long]).addTo(map).on("click", function (e) {
-                let sidebar = document.getElementById("sidebar")
+              L.marker([lat, long], {icon: blueIcon}).addTo(map)
+              let sidebar = document.getElementById("sidebar")
                 if (sidebar.style.display === "block") {
                   sidebar.style.display = "none"
                 }
                 else {
                   sidebar.style.display = "block"
                 }
-              });;
             }
           }
         })
         .catch(err => console.log("Error: " + err));
 
+      getData(api_livetrain + "/17839940/13669527") 
+        .then((myJson) => {
+          console.log(myJson)
+          currentTrainRoute = myJson
+          for (const station of myJson){
+            if(station.latLong){
+              const lat = station.latLong.latitude
+              const long = station.latLong.longitude
+              L.marker([lat, long], {icon: redIcon}).addTo(map)
+              let sidebar = document.getElementById("sidebar")
+                if (sidebar.style.display === "block") {
+                  sidebar.style.display = "none"
+                }
+                else {
+                  sidebar.style.display = "block"
+                }
+            }
+          }
+        })
+        .catch(err => console.log("Error: " + err));
     </script>
   </body>
   <footer>
