@@ -44,11 +44,7 @@ app.get("/api", async function(req, resp){
 		console.log(json2)
     }
 
-    // Return the original response from the first API call
-    resp.json(json);
-})
-
-    for (const item of json) {
+	for (const item of json) {
         const { activationId, scheduleId } = item;
         const url2 = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
         const options2 = {
@@ -64,7 +60,8 @@ app.get("/api", async function(req, resp){
 		//temp checking if i get a reponse 
 		console.log(json2)
     }
-
-
+    // Return the original response from the first API call
+    resp.json(json);
+})
 
 app.listen(PORT, () => console.log(`App listening at port ${PORT}`));
