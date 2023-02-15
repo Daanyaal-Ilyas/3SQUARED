@@ -27,37 +27,28 @@ async function GetSchedule(){
 
 app.get("/api/trainschedule", async function (req, resp) {
 
-    fs.readFile("schedule.json", async function (err, buffer) {
-        if (err)
-        {
-            console.log("Error reading File: " + err.message)
-        }
-        else
-        {
-            const json = JSON.parse(buffer.toString());
+    let schedule = GetSchedule()
 
-            let trainSchedules = []
+    let trainSchedules = []
 
-	        for (const item of json) {
-                const { activationId, scheduleId } = item;
-                const url = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
-                const options = {
-                    method: 'GET',
-                    headers: {
-                        'X-ApiVersion': "1",
-                        'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
-                    }
-                };
-                const apiResp2 = await fetch(url, options);
-                const json = await apiResp2.json();
-            
-                trainSchedules.push(json)
+    for (const item of schedule) {
+        const { activationId, scheduleId } = item;
+        const url = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-ApiVersion': "1",
+                'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
             }
-        
-            // Return the original response from the first API call
-            resp.send(trainSchedules)
-        }
-    })
+        };
+        const apiResp2 = await fetch(url, options);
+        const json = await apiResp2.json();
+    
+        trainSchedules.push(json)
+    }
+
+    // Return the original response from the first API call
+    resp.send(trainSchedules)
 })
 
 app.get("/api/livetrain/:activationId/:scheduleId", async function (req, resp) {
