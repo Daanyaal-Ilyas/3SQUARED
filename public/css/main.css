@@ -137,3 +137,8 @@ nav a:hover:before {
 #hide{
   display: none;
 }
+
+input{
+  width: 180px;
+  height: 10px;
+}
