@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .container{
+    max-width: 680px;
+    margin:auto;
+  }
+  label {
+    display: block;
+  }
+  form>div{
+    margin-bottom: 15px;
+  }
+  input[type="text"],
+  textarea {
+    font-size: 1.2rem;
+    padding: 4px;
+  }
+  div.radio{
+    display: flex;
+  }
+  div.radio > label{
+    display: inline;
+    flex: 0 0 50px;
+  }
+  div.radio > label > input{
+    margin-right: 10px;
+  }
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  position: relative;
+  font-size: 0.9rem;
+}
+button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: black;
+  transition: width 0.2s ease-in-out;
+}
+button:hover::after {
+  width: 100%;
+}
+footer {
+  background-color: #f9f9f9;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #000;
+  font-size: 1.2em;
+  font-family: Arial, sans-serif;
+  color: #333;
+  position: absolute;
+}
+
+/*test */
+/*Sidebar*/
+#sidebar {
+  width: 200px;
+  background-color: #e6f0f5;
+  float: left;
+  padding-left: 20px;
+  height: 500px;
+  border-right: 4px solid rgb(255, 255, 255);
+  display: none;
+}
+
+/*map*/
+#leafletmap {
+  height: 500px;
+  width: calc(100%-100px);
+  float: center;
+  padding-left: 20px;
+}
+
+/*nav*/ 
+#header{
+  font-size: 24px;
+  text-align: center;
+}
+nav {
+  background-color: #232f3e;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  text-align: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: #fdb813;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin-left:38%;
+  padding: 0;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #fdb813;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
+
+nav a:hover:before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+#hide{
+  display: none;
+}
+
+#hide-train{
+  display: none;
+}
+
+input{
+  width: 180px;
+  height: 10px;
+}
+img{
+  height: 20px;
+  width: 100px;;
+}

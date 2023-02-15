@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <title>Trains</title>
+  </head>
+  <body>
+    <header>
+    
+      <nav>
+        <a href="/"><img src="https://3squared.com/wp-content/themes/ep-morris/assets/images/3Squared-Logo-white.png" ></a>
+
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!--this is the sidebar-->
+            <div id="map-container">
+              <div id="sidebar">
+                <h1>Train Information</h1>
+                <button id="button-Progress">Progress</button>
+                <button>Consist</button>
+                <button id="button-Notes">Notes</button>
+                <!--this is the info that i will grab from the api and output on the sidebar-->
+                <div id="hide-train">
+                <Label>RANDOM INFO</Label>
+                </div>
+                <!--this is the notes-->
+                <div id="hide">
+                <label >Notes</label>
+                <input type="text"/>
+                </div>
+              </div>
+              <!--this is the map-->
+    <div id="leafletmap" style="height: 800px;"></div>
+    <div id="dom"></div>
+    <script src="leafletmap.js"></script>
+    <script>
+
+      var redIcon = L.icon({
+        iconUrl: '/icons/Red.png',
+        iconSize:     [20, 20], // size of the icon
+      });
+
+      var blueIcon = L.icon({
+        iconUrl: '/icons/Blue.png',
+        iconSize:     [10, 10], // size of the icon
+      });
+
+      async function getData(url) {
+        const response = await fetch(url);
+        const json = await response.json();
+        return json;
+      }
+
+      function DisplayLastLocation(schedule){
+        getData(api_livetrain + `/${schedule.activationId}/${schedule.scheduleId}`) 
+          .then((json) => {
+            const lastUpdate = json[json.length - 1]
+            if(lastUpdate){
+              if(lastUpdate.latLong){
+                const lat = lastUpdate.latLong.latitude
+                const long = lastUpdate.latLong.longitude
+                L.marker([lat, long], {icon: blueIcon}).addTo(map).on('click', (function() {
+                  let trainId = `${schedule.activationId}/${schedule.scheduleId}`
+                  DisplayTrainRoute(trainId)
+                }))
+              }
+            }
+          })
+          .catch(err => console.log("Error: " + err));
+      }
+
+      function DisplayTrainRoute(trainId){
+        getData(api_trainschedule + "/" + trainId)
+          .then((json) => {
+            currentTrainRoute = json
+            for (const station of json){
+              if(station.latLong){
+                const lat = station.latLong.latitude
+                const long = station.latLong.longitude
+                L.marker([lat, long], {icon: redIcon}).addTo(map).on("click", function(e){
+                             let sidebar = document.getElementById("sidebar")
+                if (sidebar.style.display === "block") {
+                  sidebar.style.display = "none"
+                }
+                else {
+                  sidebar.style.display = "block"
+                }
+              });
+              }
+            }
+          })
+          .catch(err => console.log("Error: " + err));
+      }
+
+      let api_schedule = "http://localhost:3000/api/schedule";
+      let api_trainschedule = "http://localhost:3000/api/trainschedule";
+      let api_livetrain = "http://localhost:3000/api/livetrain";
+      let displayList = [];
+
+      getData(api_schedule)
+        .then((json) => {
+          for (let schedule of json){
+            DisplayLastLocation(schedule)
+          }
+        })
+        .catch(err => console.log("Error: " + err));
+
+    </script>
+  </body>
+  <footer>
+    <p>&copy; 2023 3Sqaured.</p>
+  </footer>
+</html>
