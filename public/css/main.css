@@ -76,6 +76,10 @@ footer {
   background-color: #e6f0f5;
   float: left;
   padding-left: 20px;
+<<<<<<< Updated upstream
+=======
+  padding-right: 20px;
+>>>>>>> Stashed changes
   height: 600px;
   border-right: 4px solid rgb(255, 255, 255);
   display: none;
