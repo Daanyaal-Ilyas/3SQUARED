@@ -62,15 +62,14 @@ function DisplayTrainRoute(trainId) {
           let variation = liveData.get(station.tiploc)?.variation
           if(!variation){
             markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map))
-            markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map).on('click', function() { DisplayTrainsAtStation({ name: station.tiploc, tiploc: station.tiploc }); }));
           } else {
             if(variation > 0) {
               markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.tiploc} - ${station.gbttBookedArrival} <span style="color:red;">(${variation} minutes late)</span></li>`
+              sidebar.innerHTML += `<li>${station.tiploc} <span style="color:red;">(${variation} minutes late)</span></li>`
             }
             else if(variation < 0){
               markers.push(L.marker([lat, long], { icon: earlyIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.tiploc} - ${station.gbttBookedArrival} <span style="color:green;">(${Math.abs(variation)} minutes early)</span></li>`
+              sidebar.innerHTML += `<li>${station.tiploc} <span style="color:green;">(${Math.abs(variation)} minutes early)</span></li>`
             }
           }
         } else {
@@ -105,9 +104,6 @@ function DisplayLiveTrainPositions(trainId) {
         }
       }
     })
-
-
-    
     .catch(err => console.log("Error: " + err));  
 }
 
