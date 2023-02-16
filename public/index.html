@@ -46,13 +46,13 @@
     <script>
 
       var redIcon = L.icon({
-        iconUrl: '/icons/Red.png',
-        iconSize:     [20, 20], // size of the icon
+        iconUrl: '/icons/Blue.png',
+        iconSize:     [10, 10], // size of the icon
       });
 
       var blueIcon = L.icon({
-        iconUrl: '/icons/Blue.png',
-        iconSize:     [10, 10], // size of the icon
+        iconUrl: '/icons/Red.png',
+        iconSize:     [20, 20], // size of the icon
       });
 
       async function getData(url) {
@@ -70,6 +70,13 @@
                 const lat = lastUpdate.latLong.latitude
                 const long = lastUpdate.latLong.longitude
                 L.marker([lat, long], {icon: blueIcon}).addTo(map).on('click', (function() {
+                  let sidebar = document.getElementById("sidebar")
+                if (sidebar.style.display === "block") {
+                  sidebar.style.display = "none"
+                }
+                else {
+                  sidebar.style.display = "block"
+                }
                   let trainId = `${schedule.activationId}/${schedule.scheduleId}`
                   DisplayTrainRoute(trainId)
                 }))
