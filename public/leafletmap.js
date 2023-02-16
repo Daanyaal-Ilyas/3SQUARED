@@ -18,9 +18,11 @@ const label = document.getElementById("hide");
 button.addEventListener("click", function() {
     if (label.style.display === "block") {
       label.style.display = "none"
+      
     }
     else {
-        label.style.display ="block"
+      label.style.display = "block"
+      label2.style.display="none"
     }
 });
 //button2
@@ -33,5 +35,6 @@ button2.addEventListener("click", function () {
   }
   else {
     label2.style.display = "block"
+    label.style.display = "none"
   }
 })
