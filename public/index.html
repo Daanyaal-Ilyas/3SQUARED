@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="refresh" content="300">
+    <meta http-equiv="refresh" content="60">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -63,6 +63,39 @@
         return json;
       }
 
+      //this is the progress button
+      //button2
+        const button2 = document.getElementById("button-Progress");
+        const label2 = document.getElementById("hide-train");
+
+        button2.addEventListener("click", function () {
+          if (label2.style.display === "block") {
+            label2.style.display = "none"
+          }
+          else {
+            label2.style.display = "block"
+            label.style.display = "none"
+            displayTrainInfo();
+          }
+        })
+        
+        //this is the notes button
+        //button
+          const button = document.getElementById("button-Notes");
+          const label = document.getElementById("hide");
+
+          button.addEventListener("click", function () {
+            if (label.style.display === "block") {
+              label.style.display = "none"
+
+            }
+            else {
+              label.style.display = "block"
+              label2.style.display = "none"
+            }
+          });
+
+          //display last location
       function DisplayLastLocation(schedule){
   getData(api_livetrain + `/${schedule.activationId}/${schedule.scheduleId}`) 
     .then((json) => {
