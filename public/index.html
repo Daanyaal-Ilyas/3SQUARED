@@ -138,23 +138,10 @@
             actual.innerText = `Actual: ${lastUpdate.actual}`;
             trainInfo.appendChild(actual);
 
-            // create a dropdown list to display the stations that the train has passed
-            let stationList = document.createElement("select");
-            stationList.setAttribute("id", "stationList");
-
-            // populate the dropdown list with the stations that the train has passed
-            json.forEach((update) => {
-              if (update.eventType === "ARRIVAL" || update.eventType === "DEPARTURE") {
-                let option = document.createElement("option");
-                option.text = update.location;
-                stationList.add(option);
-              }
-            });
-
-            // add the dropdown list and train information to the sidebar
+          
+            // add the train information to the sidebar
             sidebar.innerHTML = "";
             sidebar.appendChild(trainInfo);
-            sidebar.appendChild(stationList);
           });
         }
       }
