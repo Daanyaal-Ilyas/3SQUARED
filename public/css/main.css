@@ -209,3 +209,36 @@ color:#ffffff ;
 p:hover {
   background-color: #334357;
 }
+
+#sidebar {
+  width: 250px;
+  background-color: #f1f1f1;
+  float: left;
+  padding: 10px;
+  height: calc(100vh - 100px);
+  border-right: 2px solid #d0d0d0;
+  overflow-y: scroll;
+}
+
+#sidebar h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+#sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar li {
+  padding: 5px 0;
+  border-bottom: 1px solid #d0d0d0;
+  font-size: 1.2rem;
+}
+
+#sidebar li:last-child {
+  border-bottom: none;
+}
+
+

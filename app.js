@@ -1,10 +1,6 @@
 import express, { json } from 'express';
 import fetch from 'node-fetch';
 import fs from 'fs';
-import moment from "moment";
-
-
-const date = moment().format("YYYY-MM-DD");
 
 const app = express();
 
@@ -15,16 +11,21 @@ app.use(json())
 const PORT = process.env.PORT || 3000;
 
 let schedule = await GetSchedule()
-fs.writeFile("schedule.json", JSON.stringify(schedule), (function (err) {
-    
-}))
+fs.writeFile("schedule.json", JSON.stringify(schedule), (function (err) {}))
 
 async function GetSchedule() {
     
+    //Check if database holds todays schedule
 
-    //Check if database holds todays schedule  use ${date} temp  2023-02-15
+    const date = new Date();
+    date.setHours(date.getHours() - 24);
+    const time24HoursAgo = date.toISOString().slice(0, 19).replace('T', ' ');
 
-    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${date} 00:00:00/${date} 23:59:59`;
+    const date2 = new Date();
+    date2.setHours(date2.getHours() + 24);
+    const time24HoursAhead = date2.toISOString().slice(0, 19).replace('T', ' ');
+
+    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${time24HoursAgo}/${time24HoursAhead}`;
     const options = {
         method: 'GET',
         headers: {
