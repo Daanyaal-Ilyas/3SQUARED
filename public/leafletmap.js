@@ -65,16 +65,16 @@ function DisplayTrainRoute(trainId) {
           } else {
             if(variation > 0) {
               markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.tiploc} <span style="color:red;">(${variation} minutes late)</span></li>`
+              sidebar.innerHTML += `<li>${station.location} <span style="color:red;">(${variation} minutes late)</span></li>`
             }
             else if(variation < 0){
               markers.push(L.marker([lat, long], { icon: earlyIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.tiploc} <span style="color:green;">(${Math.abs(variation)} minutes early)</span></li>`
+              sidebar.innerHTML += `<li>${station.location} <span style="color:green;">(${Math.abs(variation)} minutes early)</span></li>`
             }
           }
         } else {
           markers.push(L.marker([lat, long], { icon: futureIcon }).addTo(map))
-          sidebar.innerHTML += `<li>${station.tiploc} - estimated arrival time: ${lastUpdate.scheduledTimestamp}</li>`
+          sidebar.innerHTML += `<li>${station.location} - Planned arrival : ${lastUpdate.plannedArrival}</li>`
         }
       }
       if(station.tiploc == trainAtStation) isFuture = true
