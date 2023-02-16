@@ -1,14 +1,18 @@
+Train Tracking App
+This is a Node.js web application for tracking live train data using the RailSmart API.
 
-Node / express used for a basic webserver to enable fetch calls to an API.
+Installation
+To install the required dependencies, run the following command:
 
-The static files are stored in the public folder.
+Copy code
+npm install
+This will install all the required modules specified in the package.json file.
 
-This is configured in the app.js with:
+Usage
+To start the application, run the following command:
 
-```app.use(express.static("./public"));```
--------------------------------------------------------------------------------
-Steps to Run
-------------------------------------------------------------------------------
-1) npm i
-2) node app (to run the server
+Copy code
+node app
+This will start the server at http://localhost:3000/.
 
+You can then access the web application by opening your web browser and navigating to http://localhost:3000/.
