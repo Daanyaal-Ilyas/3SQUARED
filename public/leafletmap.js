@@ -45,13 +45,14 @@ function DisplayTrainRoute(trainId) {
       map.removeLayer(marker)
     }
 
+
     const liveSchedule = liveTrainDataDict[trainId]
     const lastUpdate = liveSchedule[liveSchedule.length - 1]
     const trainAtStation = lastUpdate.tiploc
     let isFuture = false
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<h3>Train Info </h3><ul>`
+    sidebar.innerHTML = `<h3>Train Info</h3><ul>`
 
     for (const station of schedule) {
       if (station.latLong) {
