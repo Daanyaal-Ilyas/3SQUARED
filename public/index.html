@@ -45,12 +45,12 @@
     <script src="leafletmap.js"></script>
     <script>
 // blue = route
-      var redIcon = L.icon({
+      var blueIcon = L.icon({
         iconUrl: '/icons/Blue.png',
         iconSize:     [15, 15], // size of the icon
       });
 // red = stations
-      var blueIcon = L.icon({
+      var redIcon = L.icon({
         iconUrl: '/icons/Red.png',
         iconSize:     [50, 50], // size of the icon
 
@@ -70,7 +70,7 @@
               if(lastUpdate.latLong){
                 const lat = lastUpdate.latLong.latitude
                 const long = lastUpdate.latLong.longitude
-                L.marker([lat, long], {icon: blueIcon}).addTo(map).on('click', (function() {
+                L.marker([lat, long], {icon: redIcon}).addTo(map).on('click', (function() {
 
                   let sidebar = document.getElementById("sidebar")
                   if (sidebar.style.display === "none") {
@@ -96,7 +96,7 @@
               if(station.latLong){
                 const lat = station.latLong.latitude
                 const long = station.latLong.longitude
-                L.marker([lat, long], {icon: redIcon}).addTo(map).on("click", function(e){
+                L.marker([lat, long], {icon: blueIcon}).addTo(map).on("click", function(e){
                              let sidebar = document.getElementById("sidebar")
                 if (sidebar.style.display === "block") {
                   sidebar.style.display = "none"
