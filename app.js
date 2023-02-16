@@ -24,7 +24,7 @@ async function GetSchedule() {
 
     //Check if database holds todays schedule  use ${date} temp  2023-02-15
 
-    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/2023-02-15 00:00:00/2023-02-15 23:59:59`;
+    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${date} 00:00:00/${date} 23:59:59`;
     const options = {
         method: 'GET',
         headers: {
