@@ -52,7 +52,21 @@ function DisplayTrainRoute(trainId) {
 
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<h3>Train Info: ${scheduleDict[trainId].toc_Name}</h3><ul>`
+    sidebar.innerHTML = `<h3>Train Info: ${scheduleDict[trainId].toc_Name}</h3>`;
+
+    // Calculate progress along the route as a percentage
+    const totalStations = schedule.length;
+    const passedStations = schedule.filter(station => {
+      const index = liveSchedule.findIndex(s => s.tiploc === station.tiploc);
+      return index !== -1 && index < liveSchedule.length - 1;
+    }).length;
+    const progress = Math.round((passedStations / totalStations) * 100);
+
+    // Add progress bar to sidebar
+    sidebar.innerHTML += `<div class="progress-bar"><div class="progress" style="width:${progress}%"></div></div>`;
+
+    // Add list of stations to sidebar
+    sidebar.innerHTML += `<ul>`;
     for (const station of schedule) {
       if (station.latLong) {
         const lat = station.latLong.latitude
@@ -62,7 +76,6 @@ function DisplayTrainRoute(trainId) {
           let variation = liveData.get(station.tiploc)?.variation
           if(!variation){
             markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map))
-            sidebar.innerHTML += `<li>${station.location} <span style="color:blue;">(No Report)</span></li>`
           } else {
             if(variation > 0) {
               markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
@@ -84,6 +97,7 @@ function DisplayTrainRoute(trainId) {
   })
   .catch(err => console.log("Error: " + err));
 }
+
 
 
 

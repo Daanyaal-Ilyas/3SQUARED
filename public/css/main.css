@@ -241,4 +241,17 @@ p:hover {
   border-bottom: none;
 }
 
+.progress-bar {
+  height: 20px;
+  width: 90%;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 10px;
+  background-color: #4CAF50;
+}
 
