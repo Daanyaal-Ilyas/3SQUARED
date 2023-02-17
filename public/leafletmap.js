@@ -52,7 +52,9 @@ function DisplayTrainRoute(trainId) {
 
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<h3>Train Info: ${scheduleDict[trainId].toc_Name}</h3>`;
+    sidebar.innerHTML = `<p>Train Info: ${scheduleDict[trainId].toc_Name}</p>`;
+    sidebar.innerHTML += `<p>Departure Location: ${schedule[0].location}</p>`;
+    sidebar.innerHTML += `<p>Destination Location: ${schedule[schedule.length - 1].location}</p>`;
 
     // Calculate progress along the route as a percentage
     const totalStations = schedule.length;
