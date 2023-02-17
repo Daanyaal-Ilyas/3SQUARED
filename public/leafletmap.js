@@ -1,9 +1,8 @@
 var map = L.map('leafletmap').setView([54, -0.5], 6);
 
 
-L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+        attribution: '©OpenStreetMap, ©CartoDB'
 }).addTo(map);
 L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -14,9 +13,9 @@ L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 
 var markers = new Array()
 
-// Array: trainId: schedule | Schedules, do not get directly, use GetTrainSchedule
+// Array: trainId: schedule | Schedules
 var scheduleDict = {}
-// Array: trainId: trainSchedule | Train Schedule
+// Array: trainId: trainSchedule | Train Schedule, do not get directly, use GetTrainSchedule
 var trainScheduleDict = {}
 // Array: trainId: trainData | Live Train Data, Train Movements
 var liveTrainDataDict = {}
@@ -89,7 +88,9 @@ function DisplayTrainRoute(trainId) {
           let variation = liveData.get(station.tiploc)?.variation
           
           if(!variation){
-            markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map))
+            let marker = L.marker([lat, long], { icon: noReportIcon }).addTo(map)
+            markers.push(marker)
+            BindPopup(marker, station.tiploc)
             sidebar.innerHTML +=
             `
             <div class="card">
@@ -106,7 +107,9 @@ function DisplayTrainRoute(trainId) {
             let dateString = FormatDateToHHCOMMAMM(date) + " | " + FormatDateToHHCOMMAMM(variationDate)
 
             if(variation > 0) {
-              markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
+              let marker = L.marker([lat, long], { icon: lateIcon }).addTo(map)
+              markers.push(marker)
+              BindPopup(marker, station.tiploc)
               sidebar.innerHTML += 
               `
               <div class="card">
@@ -118,7 +121,9 @@ function DisplayTrainRoute(trainId) {
               ` 
             }
             else if(variation < 0){
-              markers.push(L.marker([lat, long], { icon: earlyIcon }).addTo(map))
+              let marker = L.marker([lat, long], { icon: earlyIcon }).addTo(map)
+              markers.push(marker)
+              BindPopup(marker, station.tiploc)
               sidebar.innerHTML += 
               `
               <div class="card">
@@ -131,7 +136,9 @@ function DisplayTrainRoute(trainId) {
             }
           }
         } else {
-            markers.push(L.marker([lat, long], { icon: futureIcon }).addTo(map))
+            let marker = L.marker([lat, long], { icon: futureIcon }).addTo(map)
+            markers.push(marker)
+            BindPopup(marker, station.tiploc)
 
             sidebar.innerHTML += 
             `
@@ -180,7 +187,10 @@ function DisplayLiveTrainPositions(trainId) {
           if(!(lastUpdate.tiploc == schedule.destinationTiploc)) {
             const lat = lastUpdate.latLong.latitude
             const long = lastUpdate.latLong.longitude
-            L.marker([lat, long], { icon: trainIcon }).addTo(map).on('click', function() { OnTrainClicked(trainId) })
+            let marker = L.marker([lat, long], { icon: trainIcon })
+            marker.addTo(map)
+            marker.on('click', function() { OnTrainClicked(trainId) })
+            BindPopup(marker, scheduleDict[trainId].toc_Name)
           }
         }
       }
@@ -194,6 +204,16 @@ function FilterLiveTrainData(trainData){
     dict.set(data.tiploc, data)
   }
   return dict
+}
+
+function BindPopup(element, text){
+  element.bindPopup(text);
+  element.on('mouseover', function () {
+    this.openPopup();
+  })
+  element.on('mouseout', function () {
+    this.closePopup();
+  })
 }
 
 function OnTrainClicked(trainId){
