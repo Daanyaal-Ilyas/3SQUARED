@@ -1,10 +1,9 @@
 var map = L.map('leafletmap').setView([54, -0.5], 6);
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
 
+L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
+  attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+}).addTo(map);
 L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
@@ -56,52 +55,115 @@ function DisplayTrainRoute(trainId) {
     sidebar.innerHTML += `<p>Departure Location: ${schedule[0].location}</p>`;
     sidebar.innerHTML += `<p>Destination Location: ${schedule[schedule.length - 1].location}</p>`;
 
-    // Calculate progress along the route as a percentage
-    const totalStations = schedule.length;
-    const passedStations = schedule.filter(station => {
-      const index = liveSchedule.findIndex(s => s.tiploc === station.tiploc);
-      return index !== -1 && index < liveSchedule.length - 1;
-    }).length;
-    const progress = Math.round((passedStations / totalStations) * 100);
+    //// Calculate progress along the route as a percentage
+    //const totalStations = schedule.length;
+    //const passedStations = schedule.filter(station => {
+    //  const index = liveSchedule.findIndex(s => s.tiploc === station.tiploc);
+    //  return index !== -1 && index < liveSchedule.length - 1;
+    //}).length;
+    //const progress = Math.round((passedStations / totalStations) * 100);
 
-    // Add progress bar to sidebar
-    sidebar.innerHTML += `<div class="progress-bar"><div class="progress" style="width:${progress}%"></div></div>`;
+    //// Add progress bar to sidebar
+    //sidebar.innerHTML += `<div class="progress-bar"><div class="progress" style="width:${progress}%"></div></div>`;
 
     // Add list of stations to sidebar
-    sidebar.innerHTML += `<ul>`;
+    sidebar.innerHTML += `<div>`;
+
     for (const station of schedule) {
       if (station.latLong) {
         const lat = station.latLong.latitude
         const long = station.latLong.longitude
+        var date;
+        if(station.pass){
+          date = ParseHHMMDate(station.pass)
+        }
+        else if(station.arrival){
+          date = ParseHHMMDate(station.arrival)
+        }
+        else{
+          date = ParseHHMMDate(station.departure)
+        }
         if(!isFuture){
           const liveData = filtered_liveTrainDataDict[trainId]
           let variation = liveData.get(station.tiploc)?.variation
+          
           if(!variation){
             markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map))
-            sidebar.innerHTML += `<li>${station.location} <span style="color:blue;"> (No Report)</span></li>`
+            sidebar.innerHTML +=
+            `
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${station.location}</h5>
+                <p class="card-text">No Report</p>
+              </div>
+            </div>
+            `
           } else {
+
+            let variationDate = new Date(date)
+            variationDate.setMinutes(date.getMinutes() + variation)
+            let dateString = FormatDateToHHCOMMAMM(date) + " | " + FormatDateToHHCOMMAMM(variationDate)
+
             if(variation > 0) {
               markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.location} <span style="color:red;">(${variation} minutes late)</span></li>`
+              sidebar.innerHTML += 
+              `
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">${station.location}</h5>
+                  <p class="card-text">${dateString}</p>
+                </div>
+              </div>
+              ` 
             }
             else if(variation < 0){
               markers.push(L.marker([lat, long], { icon: earlyIcon }).addTo(map))
-              sidebar.innerHTML += `<li>${station.location} <span style="color:green;">(${Math.abs(variation)} minutes early)</span></li>`
+              sidebar.innerHTML += 
+              `
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">${station.location}</h5>
+                  <p class="card-text">${dateString}</p>
+                </div>
+              </div>
+              `
             }
           }
         } else {
-          markers.push(L.marker([lat, long], { icon: futureIcon }).addTo(map))
-          sidebar.innerHTML += `<li>${station.location} - Planned arrival : ${lastUpdate.plannedArrival}</li>`
+            markers.push(L.marker([lat, long], { icon: futureIcon }).addTo(map))
+
+            sidebar.innerHTML += 
+            `
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${station.location}</h5>
+                <p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>
+              </div>
+            </div>
+              `
         }
       }
       if(station.tiploc == trainAtStation) isFuture = true
     }
-    sidebar.innerHTML += `</ul>`
+
+    sidebar.innerHTML += `</div>`
   })
-  .catch(err => console.log("Error: " + err));
 }
 
+function ParseHHMMDate(dateString){
+  const hours = parseInt(dateString.substring(0, 2));
+  const minutes = parseInt(dateString.substring(2));
+  let date = new Date()
+  date.setHours(hours)
+  date.setMinutes(minutes)
+  return date
+}
 
+function FormatDateToHHCOMMAMM(date){
+  let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours()
+  let mins = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+  return hours + ":" + mins
+}
 
 
 //display last location
