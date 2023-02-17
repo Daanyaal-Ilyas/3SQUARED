@@ -208,23 +208,24 @@ function OnTrainClicked(trainId){
 
 var earlyIcon = L.icon({
   iconUrl: '/icons/Early.png',
-  iconSize: [20, 20],
+  iconSize: [17, 17],
 });
 var lateIcon = L.icon({
   iconUrl: '/icons/Late.png',
-  iconSize: [20, 20],
+  iconSize: [17, 17],
 });
 var futureIcon = L.icon({
   iconUrl: '/icons/Future.png',
-  iconSize: [20, 20],
+  iconSize: [17, 17],
 });
 var noReportIcon = L.icon({
   iconUrl: '/icons/NoReport.png',
-  iconSize: [20, 20],
+  iconSize: [17, 17],
 });
 var trainIcon = L.icon({
   iconUrl: '/icons/Train.png',
-  iconSize: [50, 50],
+  iconSize: [40, 40],
+  iconAnchor: [20, 30]
 });
 
 async function getData(url) {
