@@ -83,74 +83,49 @@ function DisplayTrainRoute(trainId) {
         else{
           date = ParseHHMMDate(station.departure)
         }
+
+        var icon;
+        var innerText;
+
         if(!isFuture){
           const liveData = filtered_liveTrainDataDict[trainId]
           let variation = liveData.get(station.tiploc)?.variation
           
           if(!variation){
-            let marker = L.marker([lat, long], { icon: noReportIcon }).addTo(map)
-            markers.push(marker)
-            BindPopup(marker, station.tiploc)
-            sidebar.innerHTML +=
-            `
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">${station.location}</h5>
-                <p class="card-text">No Report</p>
-              </div>
-            </div>
-            `
+            icon = noReportIcon
+            innerText = '<p class="card-text">No Report</p>'
           } else {
-
             let variationDate = new Date(date)
             variationDate.setMinutes(date.getMinutes() + variation)
             let dateString = FormatDateToHHCOMMAMM(date) + " | " + FormatDateToHHCOMMAMM(variationDate)
-
             if(variation > 0) {
-              let marker = L.marker([lat, long], { icon: lateIcon }).addTo(map)
-              markers.push(marker)
-              BindPopup(marker, station.tiploc)
-              sidebar.innerHTML += 
-              `
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">${station.location}</h5>
-                  <p class="card-text">${dateString}</p>
-                </div>
-              </div>
-              ` 
+              icon = lateIcon
             }
-            else if(variation < 0){
-              let marker = L.marker([lat, long], { icon: earlyIcon }).addTo(map)
-              markers.push(marker)
-              BindPopup(marker, station.tiploc)
-              sidebar.innerHTML += 
-              `
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">${station.location}</h5>
-                  <p class="card-text">${dateString}</p>
-                </div>
-              </div>
-              `
+            else{
+              icon = earlyIcon
             }
+            innerText = `<p class="card-text">${dateString}</p>`
           }
         } else {
-            let marker = L.marker([lat, long], { icon: futureIcon }).addTo(map)
-            markers.push(marker)
-            BindPopup(marker, station.tiploc)
-
-            sidebar.innerHTML += 
-            `
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">${station.location}</h5>
-                <p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>
-              </div>
-            </div>
-              `
+            icon = futureIcon
+            innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
         }
+
+        let marker = L.marker([lat, long], { icon: icon }).addTo(map)
+        markers.push(marker)
+        BindPopup(marker, station.tiploc)
+
+        sidebar.innerHTML += 
+        `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${station.location}</h5>
+            ${innerText}
+          </div>
+        </div>
+        `
       }
+
       if(station.tiploc == trainAtStation) isFuture = true
     }
 
