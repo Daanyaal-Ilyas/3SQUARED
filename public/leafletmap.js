@@ -1,12 +1,17 @@
 var map = L.map('leafletmap').setView([54, -0.5], 6);
 
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-        attribution: '©OpenStreetMap, ©CartoDB'
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '©OpenStreetMap, ©CartoDB'
 }).addTo(map);
+
 L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
+}).addTo(map);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+  attribution: '©OpenStreetMap, ©CartoDB'
 }).addTo(map);
 
 
