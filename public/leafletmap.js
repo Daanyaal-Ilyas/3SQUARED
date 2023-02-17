@@ -62,6 +62,7 @@ function DisplayTrainRoute(trainId) {
           let variation = liveData.get(station.tiploc)?.variation
           if(!variation){
             markers.push(L.marker([lat, long], { icon: noReportIcon }).addTo(map))
+            sidebar.innerHTML += `<li>${station.location} <span style="color:blue;">(No Report)</span></li>`
           } else {
             if(variation > 0) {
               markers.push(L.marker([lat, long], { icon: lateIcon }).addTo(map))
