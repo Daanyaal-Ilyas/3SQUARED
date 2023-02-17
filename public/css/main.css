@@ -55,18 +55,20 @@ button:hover::after {
 }
 footer {
   background-color: #232f3e;
-    height: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   border-top: 1px solid #000;
   font-size: 1.2em;
   font-family: Arial, sans-serif;
   color: #ffffff;
-  position: absolute;
+  margin: 0;
+  padding: 0;
 }
 
 /*test */
@@ -239,6 +241,7 @@ p:hover {
 
 #sidebar li:last-child {
   border-bottom: none;
+  margin-bottom: 50%;
 }
 
 .progress-bar {
