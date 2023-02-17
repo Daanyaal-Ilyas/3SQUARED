@@ -45,15 +45,14 @@ function DisplayTrainRoute(trainId) {
       map.removeLayer(marker)
     }
 
-
     const liveSchedule = liveTrainDataDict[trainId]
     const lastUpdate = liveSchedule[liveSchedule.length - 1]
     const trainAtStation = lastUpdate.tiploc
     let isFuture = false
+
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<h3>Train Info</h3><ul>`
-
+    sidebar.innerHTML = `<h3>Train Info: ${scheduleDict[trainId].toc_Name}</h3><ul>`
     for (const station of schedule) {
       if (station.latLong) {
         const lat = station.latLong.latitude
@@ -86,6 +85,7 @@ function DisplayTrainRoute(trainId) {
 }
 
 
+
 //display last location
 function DisplayLiveTrainPositions(trainId) {
   getData(api_livetrain + "/" + trainId)
@@ -100,7 +100,6 @@ function DisplayLiveTrainPositions(trainId) {
             const lat = lastUpdate.latLong.latitude
             const long = lastUpdate.latLong.longitude
             L.marker([lat, long], { icon: trainIcon }).addTo(map).on('click', function() { OnTrainClicked(trainId) })
-            
           }
         }
       }
