@@ -56,7 +56,7 @@ function DisplayTrainRoute(trainId) {
 
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<p>Train Info: ${scheduleDict[trainId].toc_Name}</p>`;
+    sidebar.innerHTML = `<p>Train Info: ${scheduleDict[trainId].trainUid}</p>`;
     sidebar.innerHTML += `<p>Departure Location: ${schedule[0].location}</p>`;
     sidebar.innerHTML += `<p>Destination Location: ${schedule[schedule.length - 1].location}</p>`;
 
