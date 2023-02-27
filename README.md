@@ -1,49 +1,36 @@
-# Nuxt 3 Minimal Starter
+---------------------------------------------------------------------------------------
+Train Tracking App
+---------------------------------------------------------------------------------------
+This is a Node.js web application for tracking live train data using the RailSmart API.
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+-------------------------------------------------------------------------------
+Installation
+-------------------------------------------------------------------------------
+To install the required dependencies, run the following command:
 
-## Setup
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
 npm install
 
-# pnpm
-pnpm install
-```
+This will install all the required modules specified in the package.json file.
 
-## Development Server
+In app.js Make your you set the API Key
 
-Start the development server on http://localhost:3000
+For Example 
+        headers: {
+            'X-ApiVersion': "1",
+            'X-ApiKey': ''  <------------------ Add your API Key in the ''
+        }
+-----------------------------------------------------------------------------------
+Usage
+-----------------------------------------------------------------------------------
+To start the application, run the following command:
 
-```bash
-npm run dev
-```
+node app
 
-## Production
+This will start the server at http://localhost:3000/.
 
-Build the application for production:
+You can then access the web application by opening your web browser and navigating to http://localhost:3000/.
 
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-
-## 3SQUARED INFO
-
-For API Access, make a .env at root with the following Variable(s):
-
-TRAINAPIKEY='{API KEY HERE}'
+API data for trains  at http://localhost:3000/api/livetrain
+API data for Train schedule at http://localhost:3000/api/trainschedule
+API  Schedules (TIPLocs) at http://localhost:3000/api/schedule
