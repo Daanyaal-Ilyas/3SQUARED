@@ -119,6 +119,7 @@ function DisplayTrainRoute(trainId) {
         let marker = L.marker([lat, long], { icon: icon }).addTo(map)
         markers.push(marker)
         BindPopup(marker, station.tiploc)
+        
 
         sidebar.innerHTML += 
         `
@@ -238,9 +239,9 @@ async function getData(url) {
 
 //Display Trains
 
-let api_schedule = "http://localhost:3000/api/schedule";
-let api_trainschedule = "http://localhost:3000/api/trainschedule";
-let api_livetrain = "http://localhost:3000/api/livetrain";
+let api_schedule = "/api/schedule";
+let api_trainschedule = "/api/trainschedule";
+let api_livetrain = "/api/livetrain";
 
 getData(api_schedule)
   .then((json) => {
