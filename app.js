@@ -39,7 +39,7 @@ async function GetSchedule() {
     return json
 }
 
-app.get("/api/schedule", async function (req, resp) {
+app.get("https://3-squared.vercel.app/api/schedule", async function (req, resp) {
     let schedule = await GetSchedule()
     resp.send(schedule)
 })
