@@ -10,22 +10,11 @@ app.use(json())
 
 const PORT = process.env.PORT || 3000;
 
-let schedule = await GetSchedule()
-fs.writeFile("schedule.json", JSON.stringify(schedule), (function (err) {}))
-
-async function GetSchedule() {
+async function GetSchedule(date) {
     
     //Check if database holds todays schedule
 
-    const date = new Date();
-    date.setHours(date.getHours() - 24);
-    const time24HoursAgo = date.toISOString().slice(0, 19).replace('T', ' ');
-
-    const date2 = new Date();
-    date2.setHours(date2.getHours() + 24);
-    const time24HoursAhead = date2.toISOString().slice(0, 19).replace('T', ' ');
-
-    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${time24HoursAgo}/${time24HoursAhead}`;
+    const url = `https://traindata-stag-api.railsmart.io/api/trains/tiploc/CREWEMD,WLSDEUT,LOWFRMT,WLSDRMT,CARLILE,MOSEUPY,STAFFRD,DONCIGB,THMSLGB,FLXSNGB/${date} 00:00:00/${date} 23:59:59`;
     const options = {
         method: 'GET',
         headers: {
@@ -39,36 +28,18 @@ async function GetSchedule() {
     return json
 }
 
-app.get("/api/schedule", async function (req, resp) {
-    let schedule = await GetSchedule()
-    resp.send(schedule)
-})
+app.get("/api/schedule/:date", async function (req, resp) {
+    let schedule = await GetSchedule(req.params.date)
 
-app.get("/api/trainschedule", async function (req, resp) {
+    let schedule_filtered = [];
 
-    //Check if database holds todays train schedules
+    schedule.forEach(element => {
+        if(!element.cancelled && element.actualArrival && !element.shouldHaveDepartedException){
+            schedule_filtered.push(element)
+        }
+    });
 
-    let schedule = await GetSchedule()
-    let trainSchedules = []
-
-    for (const item of schedule) {
-        const { activationId, scheduleId } = item;
-        const url = `https://traindata-stag-api.railsmart.io/api/ifmtrains/schedule/${activationId}/${scheduleId}`;
-        const options = {
-            method: 'GET',
-            headers: {
-                'X-ApiVersion': "1",
-                'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
-            }
-        };
-        const apiResp2 = await fetch(url, options);
-        const json = await apiResp2.json();
-    
-        trainSchedules.push(json)
-    }
-
-    // Return the original response from the first API call
-    resp.send(trainSchedules)
+    resp.send(schedule_filtered)
 })
 
 app.get("/api/trainschedule/:activationId/:scheduleId", async function (req, resp) {

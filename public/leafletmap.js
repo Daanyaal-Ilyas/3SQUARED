@@ -111,6 +111,9 @@ function DisplayTrainRoute(trainId) {
             }
             innerText = `<p class="card-text">${dateString}</p>`
           }
+
+          if(station.tiploc == trainAtStation) isFuture = true
+          
         } else {
             icon = futureIcon
             innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
@@ -130,8 +133,6 @@ function DisplayTrainRoute(trainId) {
         </div>
         `
       }
-
-      if(station.tiploc == trainAtStation) isFuture = true
     }
 
     sidebar.innerHTML += `</div>`
@@ -206,6 +207,14 @@ function OnTrainClicked(trainId){
   DisplayTrainRoute(trainId)
 }
 
+function GetCurrentDate(){
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 var earlyIcon = L.icon({
   iconUrl: '/icons/Early.png',
   iconSize: [17, 17],
@@ -229,8 +238,8 @@ var trainIcon = L.icon({
 });
 
 async function getData(url) {
-  const response = await fetch(url);
-  const json = await response.json();
+  const response = await fetch(url)
+  const json = await response.json()
   return json;
 }
 
@@ -238,11 +247,11 @@ async function getData(url) {
 
 //Display Trains
 
-let api_schedule = "http://localhost:3000/api/schedule";
-let api_trainschedule = "http://localhost:3000/api/trainschedule";
-let api_livetrain = "http://localhost:3000/api/livetrain";
+let api_schedule = "http://localhost:3000/api/schedule"
+let api_trainschedule = "http://localhost:3000/api/trainschedule"
+let api_livetrain = "http://localhost:3000/api/livetrain"
 
-getData(api_schedule)
+getData(api_schedule + "/" + GetCurrentDate())
   .then((json) => {
     for (let schedule of json) {
       let trainId = `${schedule.activationId}/${schedule.scheduleId}`
