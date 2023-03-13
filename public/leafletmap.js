@@ -238,9 +238,9 @@ async function getData(url) {
 
 //Display Trains
 
-let api_schedule = "/api/schedule";
-let api_trainschedule = "/api/trainschedule";
-let api_livetrain = "/api/livetrain";
+let api_schedule = "https://3-squared.vercel.app/api/schedule";
+let api_trainschedule = "https://3-squared.vercel.app/api/trainschedule";
+let api_livetrain = "https://3-squared.vercel.app/api/livetrain";
 
 getData(api_schedule)
   .then((json) => {
