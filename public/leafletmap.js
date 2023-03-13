@@ -122,6 +122,7 @@ function DisplayTrainRoute(trainId) {
         let marker = L.marker([lat, long], { icon: icon }).addTo(map)
         markers.push(marker)
         BindPopup(marker, station.tiploc)
+        
 
         sidebar.innerHTML += 
         `
