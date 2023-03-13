@@ -8,7 +8,7 @@ app.use(express.static("./public"));
 
 app.use(json())
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 let schedule = await GetSchedule()
 fs.writeFile("schedule.json", JSON.stringify(schedule), (function (err) {}))
