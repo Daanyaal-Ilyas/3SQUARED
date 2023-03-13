@@ -238,9 +238,9 @@ async function getData(url) {
 
 //Display Trains
 
-let api_schedule = "/api/schedule";
-let api_trainschedule = "/api/trainschedule";
-let api_livetrain = "/api/livetrain";
+let api_schedule = "api/schedule";
+let api_trainschedule = "api/trainschedule";
+let api_livetrain = "api/livetrain";
 
 getData(api_schedule)
   .then((json) => {
