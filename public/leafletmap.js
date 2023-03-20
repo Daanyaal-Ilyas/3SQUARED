@@ -92,29 +92,34 @@ function DisplayTrainRoute(trainId) {
         var icon;
         var innerText;
 
-        if(!isFuture){
+        if (!isFuture) {
           const liveData = filtered_liveTrainDataDict[trainId]
           let variation = liveData.get(station.tiploc)?.variation
-          
-          if(!variation){
+        
+          if (!variation) {
             icon = noReportIcon
             innerText = '<p class="card-text">No Report</p>'
           } else {
             let variationDate = new Date(date)
             variationDate.setMinutes(date.getMinutes() + variation)
-            let dateString = FormatDateToHHCOMMAMM(date) + " | " + FormatDateToHHCOMMAMM(variationDate)
-            if(variation > 0) {
+            let plannedDate = FormatDateToHHCOMMAMM(date)
+            let actualDate = FormatDateToHHCOMMAMM(variationDate)
+            if (variation > 0) {
               icon = lateIcon
-            }
-            else{
+              innerText = `<p class="card-text">Planned: ${plannedDate}  Actual: ${actualDate}</p>`
+            } else {
               icon = earlyIcon
+              innerText = `<p class="card-text">Planned: ${plannedDate}  Actual: ${actualDate}</p>`
             }
-            innerText = `<p class="card-text">${dateString}</p>`
           }
+
+          if(station.tiploc == trainAtStation) isFuture = true
+          
         } else {
-            icon = futureIcon
-            innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
+          icon = futureIcon
+          innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
         }
+        
 
         let marker = L.marker([lat, long], { icon: icon }).addTo(map)
         markers.push(marker)
@@ -131,8 +136,6 @@ function DisplayTrainRoute(trainId) {
         </div>
         `
       }
-
-      if(station.tiploc == trainAtStation) isFuture = true
     }
 
     sidebar.innerHTML += `</div>`
@@ -197,6 +200,7 @@ function BindPopup(element, text){
   })
 }
 
+
 function OnTrainClicked(trainId){
   let sidebar = document.getElementById("sidebar")
   if (sidebar.style.display === "none") {
@@ -205,6 +209,14 @@ function OnTrainClicked(trainId){
     sidebar.style.display = "block"
   }
   DisplayTrainRoute(trainId)
+}
+
+function GetCurrentDate(){
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 var earlyIcon = L.icon({
@@ -230,8 +242,8 @@ var trainIcon = L.icon({
 });
 
 async function getData(url) {
-  const response = await fetch(url);
-  const json = await response.json();
+  const response = await fetch(url)
+  const json = await response.json()
   return json;
 }
 
@@ -239,11 +251,11 @@ async function getData(url) {
 
 //Display Trains
 
-let api_schedule = "/api/schedule";
-let api_trainschedule = "/api/trainschedule";
-let api_livetrain = "/api/livetrain";
+let api_schedule = "api/schedule"
+let api_trainschedule = "api/trainschedule"
+let api_livetrain = "api/livetrain"
 
-getData(api_schedule)
+getData(api_schedule + "/" + GetCurrentDate())
   .then((json) => {
     for (let schedule of json) {
       let trainId = `${schedule.activationId}/${schedule.scheduleId}`
