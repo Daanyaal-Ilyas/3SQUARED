@@ -200,6 +200,7 @@ function BindPopup(element, text){
   })
 }
 
+
 function OnTrainClicked(trainId){
   let sidebar = document.getElementById("sidebar")
   if (sidebar.style.display === "none") {
@@ -262,4 +263,4 @@ getData(api_schedule + "/" + GetCurrentDate())
       DisplayLiveTrainPositions(trainId)
     }
   })
-  .catch(err => console.log("Error: " + err));
+  .catch(err => console.log("Errorr: " + err));
