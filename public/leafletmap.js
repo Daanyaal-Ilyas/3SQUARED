@@ -92,32 +92,34 @@ function DisplayTrainRoute(trainId) {
         var icon;
         var innerText;
 
-        if(!isFuture){
+        if (!isFuture) {
           const liveData = filtered_liveTrainDataDict[trainId]
           let variation = liveData.get(station.tiploc)?.variation
-          
-          if(!variation){
+        
+          if (!variation) {
             icon = noReportIcon
             innerText = '<p class="card-text">No Report</p>'
           } else {
             let variationDate = new Date(date)
             variationDate.setMinutes(date.getMinutes() + variation)
-            let dateString = FormatDateToHHCOMMAMM(date) + " | " + FormatDateToHHCOMMAMM(variationDate)
-            if(variation > 0) {
+            let plannedDate = FormatDateToHHCOMMAMM(date)
+            let actualDate = FormatDateToHHCOMMAMM(variationDate)
+            if (variation > 0) {
               icon = lateIcon
-            }
-            else{
+              innerText = `<p class="card-text">Planned: ${plannedDate}  Actual: ${actualDate}</p>`
+            } else {
               icon = earlyIcon
+              innerText = `<p class="card-text">Planned: ${plannedDate}  Actual: ${actualDate}</p>`
             }
-            innerText = `<p class="card-text">${dateString}</p>`
           }
 
           if(station.tiploc == trainAtStation) isFuture = true
           
         } else {
-            icon = futureIcon
-            innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
+          icon = futureIcon
+          innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
         }
+        
 
         let marker = L.marker([lat, long], { icon: icon }).addTo(map)
         markers.push(marker)
