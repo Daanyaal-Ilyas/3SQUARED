@@ -120,12 +120,39 @@ function DisplayTrainRoute(trainId) {
           innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
         }
         
+        let timeInfo = '';
 
-        let marker = L.marker([lat, long], { icon: icon }).addTo(map)
-        markers.push(marker)
-        BindPopup(marker, station.tiploc)
-        
+        if (!isFuture) {
+            if (station.arrival) {
+                timeInfo += `Arrival: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.arrival))}<br>`;
+            } else {
+                timeInfo += `Arrival: No Report<br>`;
+            }
+            if (station.departure) {
+                timeInfo += `Departure: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.departure))}`;
+            } else {
+                timeInfo += `Departure: No Report`;
+            }
+            if (station.pass) {
+                timeInfo += `<br>Pass: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.pass))}`;
+            }
+        }else {
+          if (station.arrival) {
+            timeInfo += `Planned Arrival: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.arrival))}<br>`;
+          } else {
+            timeInfo += `Planned Arrival: No Report<br>`;
+          }
+          if (station.departure) {
+            timeInfo += `Planned Departure: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.departure))}`;
+          } else {
+            timeInfo += `Planned Departure: No Report`;
+          }
+        }
+        let marker = L.marker([lat, long], { icon: icon }).addTo(map);
+        markers.push(marker);
+        BindPopup(marker, station.tiploc,  timeInfo);
 
+    
         sidebar.innerHTML += 
         `
         <div class="card">
@@ -190,8 +217,8 @@ function FilterLiveTrainData(trainData){
   return dict
 }
 
-function BindPopup(element, text){
-  element.bindPopup(text);
+function BindPopup(element, text, timeInfo = "") {
+  element.bindPopup(`<b>${text}</b><br>${timeInfo}`);
   element.on('mouseover', function () {
     this.openPopup();
   })
@@ -199,7 +226,6 @@ function BindPopup(element, text){
     this.closePopup();
   })
 }
-
 
 function OnTrainClicked(trainId){
   let sidebar = document.getElementById("sidebar")
