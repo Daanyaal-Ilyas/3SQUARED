@@ -147,6 +147,9 @@ function DisplayTrainRoute(trainId) {
           } else {
             timeInfo += `Planned Departure: No Report`;
           }
+          if (station.pass) {
+            timeInfo += `<br>Planned Pass: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.pass))}`;
+        }
         }
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
