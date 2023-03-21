@@ -230,15 +230,23 @@ function BindPopup(element, text, timeInfo = "") {
   })
 }
 
-function OnTrainClicked(trainId){
-  let sidebar = document.getElementById("sidebar")
-  if (sidebar.style.display === "none") {
-    sidebar.style.display = "block"
+function OnTrainClicked(trainId) {
+  let sidebar = document.getElementById("sidebar");
+  if (sidebar.dataset.selectedTrainId === trainId) {
+    hideSidebar();
   } else {
-    sidebar.style.display = "block"
+    sidebar.style.display = "block";
+    sidebar.dataset.selectedTrainId = trainId;
+    DisplayTrainRoute(trainId);
   }
-  DisplayTrainRoute(trainId)
 }
+
+function hideSidebar() {
+  let sidebar = document.getElementById("sidebar");
+  sidebar.style.display = "none";
+  sidebar.dataset.selectedTrainId = "";
+}
+
 
 function GetCurrentDate(){
   const currentDate = new Date();
