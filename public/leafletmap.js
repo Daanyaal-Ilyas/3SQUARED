@@ -271,23 +271,23 @@ function GetCurrentDate(){
 
 var earlyIcon = L.icon({
   iconUrl: '/icons/Early.png',
-  iconSize: [17, 17],
+  iconSize: [20, 20],
 });
 var lateIcon = L.icon({
   iconUrl: '/icons/Late.png',
-  iconSize: [17, 17],
+  iconSize: [20, 20],
 });
 var futureIcon = L.icon({
   iconUrl: '/icons/Future.png',
-  iconSize: [17, 17],
+  iconSize: [20, 20],
 });
 var noReportIcon = L.icon({
   iconUrl: '/icons/NoReport.png',
-  iconSize: [17, 17],
+  iconSize: [20, 20],
 });
 var trainIcon = L.icon({
   iconUrl: '/icons/Train.png',
-  iconSize: [40, 40],
+  iconSize: [40, 35],
   iconAnchor: [20, 30]
 });
 
