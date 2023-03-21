@@ -1,19 +1,23 @@
 var map = L.map('leafletmap').setView([54, -0.5], 6);
 
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    attribution: '©OpenStreetMap, ©CartoDB'
+L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
-}).addTo(map);
+//L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+//    attribution: '©OpenStreetMap, ©CartoDB'
+//}).addTo(map);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
-  attribution: '©OpenStreetMap, ©CartoDB'
-}).addTo(map);
+//L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
+//    maxZoom: 19,
+//    attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
+//}).addTo(map);
 
+//L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+//  attribution: '©OpenStreetMap, ©CartoDB'
+//}).addTo(map);
 
 
 var markers = new Array()
@@ -43,6 +47,8 @@ function GetTrainSchedule(trainId){
   })
 }
 
+var routeLine = null;
+
 function DisplayTrainRoute(trainId) {
   GetTrainSchedule(trainId).then(function (schedule) {
     for (let marker of markers){
@@ -53,7 +59,7 @@ function DisplayTrainRoute(trainId) {
     const lastUpdate = liveSchedule[liveSchedule.length - 1]
     const trainAtStation = lastUpdate.tiploc
     let isFuture = false
-
+    const latLngs = [];
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
     sidebar.innerHTML = `<p>Train Info: ${scheduleDict[trainId].trainUid}</p>`;
@@ -119,7 +125,11 @@ function DisplayTrainRoute(trainId) {
           icon = futureIcon
           innerText = `<p class="card-text">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
         }
-        
+        if (routeLine) {
+          map.removeLayer(routeLine);
+        }
+        latLngs.push([lat, long]);
+
         let timeInfo = '';
 
         if (!isFuture) {
@@ -151,6 +161,9 @@ function DisplayTrainRoute(trainId) {
             timeInfo += `<br>Planned Pass: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.pass))}`;
         }
         }
+
+
+        routeLine = L.polyline(latLngs, {color: 'Aquamarine', weight: 10}).addTo(map);
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
         BindPopup(marker, station.tiploc,  timeInfo);
