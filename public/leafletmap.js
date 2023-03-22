@@ -6,6 +6,10 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{
 	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+
+
+
+
 //L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 //    attribution: '©OpenStreetMap, ©CartoDB'
 //}).addTo(map);
@@ -50,6 +54,8 @@ function GetTrainSchedule(trainId){
 var routeLine = null;
 
 function DisplayTrainRoute(trainId) {
+
+
   GetTrainSchedule(trainId).then(function (schedule) {
     for (let marker of markers){
       map.removeLayer(marker)
@@ -178,9 +184,9 @@ function DisplayTrainRoute(trainId) {
           </div>
         </div>
         `
+
       }
     }
-
     sidebar.innerHTML += `</div>`
   })
 }
@@ -297,7 +303,33 @@ async function getData(url) {
   return json;
 }
 
+function createLegend() {
+  const legend = document.getElementById("map-legend");
+  const icons = [
+    { icon: earlyIcon, description: "Early/On Time (Stations)" },
+    { icon: lateIcon, description: "Late (Stations)" },
+    { icon: futureIcon, description: "Future (Stations)" },
+    { icon: noReportIcon, description: "No Report (Stations)" },
+    { icon: trainIcon, description: "Train" },
+  ];
 
+  for (const item of icons) {
+    const iconDiv = document.createElement("div");
+    const iconImg = L.DomUtil.create("img");
+    iconImg.src = item.icon.options.iconUrl;
+    iconImg.style.width = `${item.icon.options.iconSize[0]}px`;
+    iconImg.style.height = `${item.icon.options.iconSize[1]}px`;
+    iconDiv.appendChild(iconImg);
+
+    const iconDescription = document.createElement("span");
+    iconDescription.textContent = ` ${item.description}`;
+    iconDiv.appendChild(iconDescription);
+
+    legend.appendChild(iconDiv);
+  }
+}
+
+createLegend();
 
 //Display Trains
 
