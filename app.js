@@ -29,7 +29,9 @@ async function GetSchedule(date) {
 }
 
 app.get("/api/schedule/:date", async function (req, resp) {
-    let schedule = await GetSchedule(req.params.date)
+    var dateParam = req.params.date;
+
+    let schedule = await GetSchedule(dateParam)
 
     let schedule_filtered = [];
 
