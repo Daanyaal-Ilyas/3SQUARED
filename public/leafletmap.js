@@ -106,6 +106,7 @@ function DisplayTrainRoute(trainId) {
 
         var icon;
         var innerText;
+        let timeInfo;
 
         if (!isFuture) {
           const liveData = filtered_liveTrainDataDict[trainId]
@@ -114,6 +115,7 @@ function DisplayTrainRoute(trainId) {
           if (!variation) {
             icon = noReportIcon
             innerText = '<p class="card-text sidebar_p noreport">No Report</p>'
+            timeInfo = `No Report<br>`
           } else {
             let variationDate = new Date(date)
             variationDate.setMinutes(date.getMinutes() + variation)
@@ -126,51 +128,20 @@ function DisplayTrainRoute(trainId) {
               icon = earlyIcon
               innerText = `<p class="card-text sidebar_p planned">Planned: ${plannedDate}</p><p class="card-text sidebar_p earlyontime">Actual: ${actualDate}</p>`
             }
+            timeInfo = `Planned: ${plannedDate}<br>Actual: ${actualDate}`
           }
 
           if(station.tiploc == trainAtStation) isFuture = true
           
         } else {
           icon = futureIcon
-          innerText = `<p class="card-text sidebar_p future">Planned arrival ${FormatDateToHHCOMMAMM(date)}</p>`
+          innerText = `<p class="card-text sidebar_p future">Planned: ${FormatDateToHHCOMMAMM(date)}</p>`
+          timeInfo = `Planned: ${FormatDateToHHCOMMAMM(date)}`
         }
         if (routeLine) {
           map.removeLayer(routeLine);
         }
         latLngs.push([lat, long]);
-
-        let timeInfo = '';
-
-        if (!isFuture) {
-            if (station.arrival) {
-                timeInfo += `Arrival: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.arrival))}<br>`;
-            } else {
-                timeInfo += `Arrival: No Report<br>`;
-            }
-            if (station.departure) {
-                timeInfo += `Departure: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.departure))}`;
-            } else {
-                timeInfo += `Departure: No Report`;
-            }
-            if (station.pass) {
-                timeInfo += `<br>Pass: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.pass))}`;
-            }
-        }else {
-          if (station.arrival) {
-            timeInfo += `Planned Arrival: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.arrival))}<br>`;
-          } else {
-            timeInfo += `Planned Arrival: No Report<br>`;
-          }
-          if (station.departure) {
-            timeInfo += `Planned Departure: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.departure))}`;
-          } else {
-            timeInfo += `Planned Departure: No Report`;
-          }
-          if (station.pass) {
-            timeInfo += `<br>Planned Pass: ${FormatDateToHHCOMMAMM(ParseHHMMDate(station.pass))}`;
-        }
-        }
-
 
         routeLine = L.polyline(latLngs, {color: 'cyan', weight: 10}).addTo(map);
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
