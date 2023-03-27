@@ -70,9 +70,9 @@ function DisplayTrainRoute(trainId) {
     const latLngs = [];
     // clear existing content in the sidebar
     const sidebar = document.getElementById("sidebar")
-    sidebar.innerHTML = `<p>Train Info: ${scheduleDict[trainId].trainUid}</p>`;
-    sidebar.innerHTML += `<p>Departure Location: ${schedule[0].location}</p>`;
-    sidebar.innerHTML += `<p>Destination Location: ${schedule[schedule.length - 1].location}</p>`;
+    sidebar.innerHTML = `<p>Train UID<br>${scheduleDict[trainId].trainUid}</p>`;
+    sidebar.innerHTML += `<p>Departure<br>${schedule[0].location}</p>`;
+    sidebar.innerHTML += `<p>Destination<br>${schedule[schedule.length - 1].location}</p>`;
 
     //// Calculate progress along the route as a percentage
     //const totalStations = schedule.length;
@@ -143,12 +143,11 @@ function DisplayTrainRoute(trainId) {
         }
         latLngs.push([lat, long]);
 
-        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 10}).addTo(map);
+        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 5}).addTo(map);
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
         BindPopup(marker, station.tiploc,  timeInfo);
 
-    
         sidebar_timetable.innerHTML += 
         `
         <div class="card">
