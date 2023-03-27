@@ -169,7 +169,7 @@ function DisplayTrainRoute(trainId) {
         }
 
 
-        routeLine = L.polyline(latLngs, {color: 'Aquamarine', weight: 10}).addTo(map);
+        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 10}).addTo(map);
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
         BindPopup(marker, station.tiploc,  timeInfo);
