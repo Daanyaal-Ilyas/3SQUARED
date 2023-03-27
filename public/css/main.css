@@ -131,6 +131,18 @@ nav {
   text-align: center;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  white-space: nowrap; /* add this line */
+}
+
+li {
+  display: inline-block;
+}
+
 nav a {
   text-decoration: none;
   color: #fff;
@@ -138,7 +150,10 @@ nav a {
   font-weight: 600;
   margin-left: 20px;
   transition: color 0.3s ease-in-out;
+  display: inline-block; /* add this line */
+  white-space: nowrap; /* add this line */
 }
+
 
 nav a:hover {
   color: #fdb813;
