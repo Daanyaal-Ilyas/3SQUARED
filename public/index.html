@@ -49,6 +49,13 @@
         <div id="map-info">
           <div id="map-legend"></div>
           <div>
+            <style>
+              .leaflet-control-zoom {
+                position: relative;
+                top: 5px;
+                left: 1650px; 
+              }
+            </style>
             <form action="" id="date-time">
               <input type="datetime-local" class="datetime" id="datetime_dt" name="dt">
               <input type="submit" value="Submit" id="datetime_s">
