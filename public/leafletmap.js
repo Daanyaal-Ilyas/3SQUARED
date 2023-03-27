@@ -308,7 +308,7 @@ function createLegend() {
   const icons = [
     { icon: earlyIcon, description: "Early/On Time (Stations)" },
     { icon: lateIcon, description: "Late (Stations)" },
-    { icon: futureIcon, description: "Future (Stations)" },
+    { icon: futureIcon, description: "Planned (Stations)" },
     { icon: noReportIcon, description: "No Report (Stations)" },
     { icon: trainIcon, description: "Train" },
   ];
