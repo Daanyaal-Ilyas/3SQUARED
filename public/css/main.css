@@ -170,8 +170,10 @@ nav a:hover {
 nav ul {
   display: flex;
   list-style: none;
-  margin-left:38%;
-  padding: 0;
+  width: auto;
+  height: 30px;
+  margin: auto;
+  margin-right: 25px;
 }
 
 nav li {
@@ -209,8 +211,9 @@ input{
   height: 10px;
 }
 img{
-  height: 20px;
-  width: 100px;;
+  width: auto;
+  height: 30px;
+  margin: auto;
 }
 
 
