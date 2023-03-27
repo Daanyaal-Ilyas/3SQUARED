@@ -345,4 +345,5 @@ getData(api_schedule + "/" + GetCurrentDate())
       DisplayLiveTrainPositions(trainId)
     }
   })
+  
   .catch(err => console.log("Error: " + err));
