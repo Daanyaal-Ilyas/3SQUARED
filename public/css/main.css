@@ -144,7 +144,7 @@ ul {
   padding: 0;
   margin: 0;
   display: inline-block;
-  white-space: nowrap; /* add this line */
+  white-space: nowrap; 
 }
 
 li {
@@ -353,3 +353,6 @@ color:#ffffff ;
 .future{
   color: blue;
 }
+
+/*daanish style*/
+ .leaflet-control-zoom {position: relative;   top: 5px;   left: 1650px;}
