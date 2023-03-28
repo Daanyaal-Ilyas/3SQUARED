@@ -23,6 +23,25 @@
       crossorigin="anonymous"
     ></script>
     <!-- Add this inside the <head> tag of your HTML file -->
+    <style>
+      .leaflet-control-zoom {
+        position: fixed;
+        top: 55px;
+        right: 55px;
+      }
+
+      @media screen and (max-width: 991px) {
+        .leaflet-control-zoom {
+          right: 50px;
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        .leaflet-control-zoom {
+          right: 10px;
+        }
+      }
+    </style>
     <title>Train Tracker</title>
   </head>
   <body>
@@ -56,9 +75,8 @@
           </div>
         </div>
       </div>
-
     </div>
-      <div id="dom"></div>
+    <div id="dom"></div>
     </div>
     <footer>
       <b>&copy; 2023 3Squared</b>
