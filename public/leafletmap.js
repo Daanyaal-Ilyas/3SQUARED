@@ -143,7 +143,7 @@ function DisplayTrainRoute(trainId) {
         }
         latLngs.push([lat, long]);
 
-        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 5}).addTo(map);
+        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 10}).addTo(map);
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
         BindPopup(marker, station.tiploc,  timeInfo);
