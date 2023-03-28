@@ -1,0 +1,36 @@
+body {
+    background-color:#ffffff; 
+  }
+  #contactinfo{
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #000000;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-bottom: 1.5px dashed transparent;
+    background-color:transparent;
+    border-radius: 5px;
+    text-align: center;
+  }
+  #SoftwaresupportDesk,
+  #location{
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #000000;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-bottom: 1.5px dashed transparent;
+    background-color:transparent;
+    border-radius: 5px;
+    text-align: center;
+  }
+  #header1{
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #232f3e;
+    margin-bottom: 20px;
+    text-align: center;
+  }
