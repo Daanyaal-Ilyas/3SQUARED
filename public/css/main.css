@@ -18,7 +18,7 @@
 }
 
 .leaflet-control-zoom {
-  position: absolute;
+  position: fixed;
   top: 5px;
   left: 1450px;
 }
