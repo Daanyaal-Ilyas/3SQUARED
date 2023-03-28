@@ -7,6 +7,22 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{
 
 
 
+function adjustZoomControlPosition() {
+  var zoomControl = document.querySelector('.leaflet-control-zoom');
+  if (window.innerWidth < 768) {
+    zoomControl.style.right = '10px';
+  } else if (window.innerWidth < 992) {
+    zoomControl.style.right = '50px';
+  } else {
+    zoomControl.style.right = '100px';
+  }
+}
+
+window.addEventListener('resize', adjustZoomControlPosition);
+adjustZoomControlPosition();
+
+
+
 
 
 //L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
