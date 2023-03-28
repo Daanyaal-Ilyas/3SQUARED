@@ -1,7 +1,5 @@
 import express, { json } from 'express';
 import fetch from 'node-fetch';
-import fs from 'fs';
-import retry from 'async-retry';
 const app = express();
 
 app.use(express.static("./public"));
@@ -22,7 +20,7 @@ async function GetSchedule(date) {
             'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
         }
     };
-    const apiResp = await fetchWithRetry(url, options);
+    const apiResp = await fetch(url, options);
     const json = await apiResp.json();
 
     return json
@@ -56,7 +54,7 @@ app.get("/api/trainschedule/:activationId/:scheduleId", async function (req, res
             'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
         }
     };
-    const apiResp2 = await fetchWithRetry(url, options);
+    const apiResp2 = await fetch(url, options);
     const json = await apiResp2.json();
 
     // Return the original response from the first API call
@@ -73,22 +71,12 @@ app.get("/api/livetrain/:activationId/:scheduleId", async function (req, resp) {
             'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
         }
     };
-    const apiResp = await fetchWithRetry(url, options);
+    const apiResp = await fetch(url, options);
     const json = await apiResp.json();
 
     resp.json(json)
 })
 
-async function fetchWithRetry(url, options) {
-    return await retry(async () => {
-        const response = await fetch(url, options);
-        if (!response.ok) throw new Error('Fetch failed');
-        return response;
-    }, {
-        retries: 3, // Adjust the number of retries as needed
-        minTimeout: 1000, // Minimum time between retries (in ms)
-        factor: 2, // Exponential backoff factor
-    });
-}
+
 
 app.listen(PORT, () => console.log(`App listening at port ${PORT}`));
