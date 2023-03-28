@@ -22,7 +22,6 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <!-- Add this inside the <head> tag of your HTML file -->
     <style>
       .leaflet-control-zoom {
         position: fixed;
@@ -46,19 +45,15 @@
   </head>
   <body>
     <header>
-      <nav>
-        
+      <nav>  
         <a href="/">
           <img src="https://3squared.com/wp-content/themes/ep-morris/assets/images/3Squared-Logo-white.png"/>
         </a>
-        
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-        
-          
+        </ul>  
       </nav>
     </header>
     <div id="map-container" style="height: calc(100% - 110px)">
@@ -67,6 +62,7 @@
         <div id="leafletmap" style="height: 100%; "></div>
         <div id="map-info">
           <div id="map-legend"></div>
+          <button id="showAllTrainsBtn" style="display:none;">Show All Trains</button>
           <div>
             <form action="" id="date-time">
               <input type="datetime-local" class="datetime" id="datetime_dt" name="dt">

@@ -6,22 +6,6 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{
 }).addTo(map);
 
 
-
-
-//L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-//    attribution: '©OpenStreetMap, ©CartoDB'
-//}).addTo(map);
-
-//L.tileLayer('https://tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
-//    maxZoom: 19,
-//    attribution: '&copy; <a href="http://www.openrailwaymap.org/">OpenRailWayMap</a>'
-//}).addTo(map);
-
-//L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
-//  attribution: '©OpenStreetMap, ©CartoDB'
-//}).addTo(map);
-
-
 var datetime
 var datetime_date
 var datetime_time
@@ -73,17 +57,7 @@ function DisplayTrainRoute(trainId) {
     sidebar.innerHTML += `<p>Departure<br>${schedule[0].location}</p>`;
     sidebar.innerHTML += `<p>Destination<br>${schedule[schedule.length - 1].location}</p>`;
 
-    //// Calculate progress along the route as a percentage
-    //const totalStations = schedule.length;
-    //const passedStations = schedule.filter(station => {
-    //  const index = liveSchedule.findIndex(s => s.tiploc === station.tiploc);
-    //  return index !== -1 && index < liveSchedule.length - 1;
-    //}).length;
-    //const progress = Math.round((passedStations / totalStations) * 100);
-
-    //// Add progress bar to sidebar
-    //sidebar.innerHTML += `<div class="progress-bar"><div class="progress" style="width:${progress}%"></div></div>`;
-
+ 
     // Add list of stations to sidebar
     var sidebar_timetable = document.createElement("div")
     sidebar_timetable.className = "sidebar_timetable"
@@ -251,6 +225,8 @@ function BindPopup(element, text, timeInfo = "") {
     this.closePopup();
   })
 }
+
+const showAllTrainsBtn = document.getElementById("showAllTrainsBtn");
 
 function OnTrainClicked(trainId) {
   let sidebar = document.getElementById("sidebar");
