@@ -194,7 +194,7 @@ function DisplayLiveTrainPositions(trainId) {
           if(!(lastUpdate.tiploc == schedule.destinationTiploc)) {
             const lat = lastUpdate.latLong.latitude
             const long = lastUpdate.latLong.longitude
-            let marker = L.marker([lat, long], { icon: trainIcon })
+            let marker = L.marker([lat, long], { icon: trainIcon, trainId: trainId });
             marker.addTo(map)
             marker.on('click', function() { OnTrainClicked(trainId) })
             BindPopup(marker, scheduleDict[trainId].toc_Name)
@@ -256,11 +256,24 @@ function BindPopup(element, text, timeInfo = "") {
 function OnTrainClicked(trainId) {
   let sidebar = document.getElementById("sidebar");
   if (sidebar.dataset.selectedTrainId === trainId) {
+    // hide sidebar and reset selectedTrainId
     hideSidebar();
+    // show all train markers
+    map.eachLayer(function(layer) {
+      if (layer.options.icon === trainIcon) {
+        layer.setOpacity(1);
+      }
+    });
   } else {
     sidebar.style.display = "block";
     sidebar.dataset.selectedTrainId = trainId;
     DisplayTrainRoute(trainId);
+    // hide all train markers except for the selected one
+    map.eachLayer(function(layer) {
+      if (layer.options.icon === trainIcon && layer.options.trainId !== trainId) {
+        layer.setOpacity(0);
+      }
+    });
   }
 }
 
