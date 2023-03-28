@@ -8,7 +8,6 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{
 
 
 
-
 //L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 //    attribution: '©OpenStreetMap, ©CartoDB'
 //}).addTo(map);
