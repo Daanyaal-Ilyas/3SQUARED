@@ -5,22 +5,92 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{
 	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+let api_schedule = "api/schedule"
+let api_trainschedule = "api/trainschedule"
+let api_livetrain = "api/livetrain"
 
-var datetime
-var datetime_date
-var datetime_time
+var earlyIcon = L.icon({
+  iconUrl: '/icons/Early.png',
+  iconSize: [20, 20],
+  popupAnchor: [0, -25]
+});
+var lateIcon = L.icon({
+  iconUrl: '/icons/Late.png',
+  iconSize: [20, 20],
+  popupAnchor: [0, -25]
+});
+var futureIcon = L.icon({
+  iconUrl: '/icons/Future.png',
+  iconSize: [20, 20],
+  popupAnchor: [0, -25]
+});
+var noReportIcon = L.icon({
+  iconUrl: '/icons/NoReport.png',
+  iconSize: [20, 20],
+  popupAnchor: [0, -25]
+});
+var trainIcon = L.icon({
+  iconUrl: '/icons/Train.png',
+  iconSize: [40, 35],
+  iconAnchor: [20, 30],
+  popupAnchor: [0, -30]
+});
 
-var markers = new Array()
+var datetime;
+var datetime_date;
+var datetime_time;
+
+var markers = new Array();
+var trainMarkers = new Array();
+
+var routeLine = null;
 
 // Array: trainId: schedule | Schedules
-var scheduleDict = {}
+var scheduleDict = {};
 // Array: trainId: trainSchedule | Train Schedule, do not get directly, use GetTrainSchedule
-var trainScheduleDict = {}
+var trainScheduleDict = {};
 // Array: trainId: trainData | Live Train Data, Train Movements
-var liveTrainDataDict = {}
+var liveTrainDataDict = {};
 // Array: trainId: Array: tiploc: trainData  | Live Train Data, Train Movements, Each holds a Map: tiploc: trainData
-var filtered_liveTrainDataDict = {}
+var filtered_liveTrainDataDict = {};
 
+CreateLegend()
+
+function Refresh(dateString) {
+    console.log(dateString)
+    datetime = new Date(dateString)
+    var dt = datetime.toISOString().split('T')
+    datetime_date = dt[0]
+    datetime_time = dt[1]
+
+    scheduleDict = {}
+    trainScheduleDict = {}
+    liveTrainDataDict = {}
+    filtered_liveTrainDataDict = {}
+    if (routeLine) {
+        map.removeLayer(routeLine);
+    }
+
+    RemoveAllMarkers()
+    RemoveTrainMarkers()
+
+    //TODO have this only run when the date is a new date
+    getData(api_schedule + "/" + datetime_date)
+    .then((json) => {
+        for (let schedule of json) {
+            let trainId = `${schedule.activationId}/${schedule.scheduleId}`
+            scheduleDict[trainId] = schedule
+            DisplayLiveTrainPositions(trainId)
+        }
+    })
+    .catch(err => console.log("Error: " + err))
+}
+
+async function getData(url) {
+  const response = await fetch(url)
+  const json = await response.json()
+  return json;
+}
 
 function GetTrainSchedule(trainId){
   return new Promise(function(_callback){
@@ -37,14 +107,24 @@ function GetTrainSchedule(trainId){
   })
 }
 
-var routeLine = null;
+function RemoveAllMarkers() {
+    for (let marker of markers){
+      map.removeLayer(marker)
+    }
+    markers = new Array()
+}
+
+function RemoveTrainMarkers() {
+    for (let marker of trainMarkers){
+      map.removeLayer(marker)
+    }
+    trainMarkers = new Array()
+}
 
 function DisplayTrainRoute(trainId) {
 
   GetTrainSchedule(trainId).then(function (schedule) {
-    for (let marker of markers){
-      map.removeLayer(marker)
-    }
+    RemoveAllMarkers()
 
     const liveSchedule = liveTrainDataDict[trainId]
     const lastUpdate = liveSchedule[liveSchedule.length - 1]
@@ -152,7 +232,6 @@ function FormatDateToHHCOMMAMM(date){
   return hours + ":" + mins
 }
 
-
 //display last location
 function DisplayLiveTrainPositions(trainId) {
   getData(api_livetrain + "/" + trainId)
@@ -169,7 +248,8 @@ function DisplayLiveTrainPositions(trainId) {
             const long = lastUpdate.latLong.longitude
             let marker = L.marker([lat, long], { icon: trainIcon, trainId: trainId });
             marker.addTo(map)
-            marker.on('click', function() { OnTrainClicked(trainId) })
+            marker.on('click', function () { OnTrainClicked(trainId) })
+            trainMarkers.push(marker)
             BindPopup(marker, scheduleDict[trainId].toc_Name)
           }
         }
@@ -190,7 +270,7 @@ function FilterLiveTrainDataDate(trainData){
           filtered.push(data)
         }
       }
-      if(data.eventType == "ARRIVAL" || date.eventType == "DESTINATION"){
+      if(data.eventType == "ARRIVAL" || data.eventType == "DESTINATION"){
         var arrivalData = new Date(data.actualArrival)
         if(arrivalData.getTime() < datetime.getTime()){
           filtered.push(data)
@@ -232,7 +312,7 @@ function OnTrainClicked(trainId) {
   let sidebar = document.getElementById("sidebar");
   if (sidebar.dataset.selectedTrainId === trainId) {
     // hide sidebar and reset selectedTrainId
-    hideSidebar();
+    HideSidebar();
     // show all train markers
     map.eachLayer(function(layer) {
       if (layer.options.icon === trainIcon) {
@@ -252,12 +332,11 @@ function OnTrainClicked(trainId) {
   }
 }
 
-function hideSidebar() {
+function HideSidebar() {
   let sidebar = document.getElementById("sidebar");
   sidebar.style.display = "none";
   sidebar.dataset.selectedTrainId = "";
 }
-
 
 function GetCurrentDate(){
   const currentDate = new Date();
@@ -267,40 +346,7 @@ function GetCurrentDate(){
   return `${year}-${month}-${day}`;
 }
 
-var earlyIcon = L.icon({
-  iconUrl: '/icons/Early.png',
-  iconSize: [20, 20],
-  popupAnchor: [0, -25]
-});
-var lateIcon = L.icon({
-  iconUrl: '/icons/Late.png',
-  iconSize: [20, 20],
-  popupAnchor: [0, -25]
-});
-var futureIcon = L.icon({
-  iconUrl: '/icons/Future.png',
-  iconSize: [20, 20],
-  popupAnchor: [0, -25]
-});
-var noReportIcon = L.icon({
-  iconUrl: '/icons/NoReport.png',
-  iconSize: [20, 20],
-  popupAnchor: [0, -25]
-});
-var trainIcon = L.icon({
-  iconUrl: '/icons/Train.png',
-  iconSize: [40, 35],
-  iconAnchor: [20, 30],
-  popupAnchor: [0, -30]
-});
-
-async function getData(url) {
-  const response = await fetch(url)
-  const json = await response.json()
-  return json;
-}
-
-function createLegend() {
+function CreateLegend() {
   const legend = document.getElementById("map-legend");
   const icons = [
     { icon: earlyIcon, description: "Early/On Time" },
@@ -325,37 +371,3 @@ function createLegend() {
     legend.appendChild(iconDiv);
   }
 }
-
-
-
-createLegend();
-
-//Display Trains
-
-let api_schedule = "api/schedule"
-let api_trainschedule = "api/trainschedule"
-let api_livetrain = "api/livetrain"
-
-const params = new URLSearchParams(document.location.search);
-
-if(params.has("dt")){
-  var date = params.get("dt")
-  datetime = new Date(date)
-  var dt = datetime.toISOString().split('T')
-  datetime_date = dt[0]
-  datetime_time = dt[1]
-}
-else{
-  datetime_date = GetCurrentDate()
-}
-
-getData(api_schedule + "/" + datetime_date)
-  .then((json) => {
-    for (let schedule of json) {
-      let trainId = `${schedule.activationId}/${schedule.scheduleId}`
-      scheduleDict[trainId] = schedule
-      DisplayLiveTrainPositions(trainId)
-    }
-  })
-  
-  .catch(err => console.log("Error: " + err));

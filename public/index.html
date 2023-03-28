@@ -22,6 +22,7 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <style>
       .leaflet-control-zoom {
         position: fixed;
@@ -79,4 +80,19 @@
     </footer>
   </body>
   <script src="leafletmap.js"></script>
+  <script>
+    Refresh(new Date().toISOString())
+
+    interval = 5
+    var intervalId = setInterval(() => {
+      Refresh(new Date().toISOString())
+    }, interval * 60000);
+
+    $('#date-time').submit(function(e){
+      e.preventDefault()
+      var date = $('#datetime_dt').val()
+      Refresh(date)
+      clearInterval(intervalId)
+    })
+  </script>
 </html>
