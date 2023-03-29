@@ -54,36 +54,61 @@ var liveTrainDataDict = {};
 // Array: trainId: Array: tiploc: trainData  | Live Train Data, Train Movements, Each holds a Map: tiploc: trainData
 var filtered_liveTrainDataDict = {};
 
+var previous_datetime_date = null;
+
 CreateLegend()
 
 function Refresh(dateString) {
-    console.log(dateString)
-    datetime = new Date(dateString)
-    var dt = datetime.toISOString().split('T')
-    datetime_date = dt[0]
-    datetime_time = dt[1]
+  console.log(dateString)
+  datetime = new Date(dateString)
+  var dt = datetime.toISOString().split('T')
+  datetime_date = dt[0]
+  datetime_time = dt[1]
 
-    scheduleDict = {}
-    trainScheduleDict = {}
-    liveTrainDataDict = {}
-    filtered_liveTrainDataDict = {}
-    if (routeLine) {
-        map.removeLayer(routeLine);
-    }
+  trainScheduleDict = {}
+  liveTrainDataDict = {}
+  filtered_liveTrainDataDict = {}
+  if (routeLine) {
+    map.removeLayer(routeLine);
+  }
 
-    RemoveAllMarkers()
-    RemoveTrainMarkers()
+  RemoveAllMarkers()
+  RemoveTrainMarkers()
 
-    //TODO have this only run when the date is a new date
-    getData(api_schedule + "/" + datetime_date)
-    .then((json) => {
-        for (let schedule of json) {
+  if(previous_datetime_date){
+    if(!datetime_date == previous_datetime_date){
+      scheduleDict = {}
+      getData(api_schedule + "/" + datetime_date)
+        .then((json) => {
+          for (let schedule of json) {
             let trainId = `${schedule.activationId}/${schedule.scheduleId}`
             scheduleDict[trainId] = schedule
             DisplayLiveTrainPositions(trainId)
+          }
+        })
+        .catch(err => console.log("Error: " + err))
+    }
+    else{
+      Object.entries(scheduleDict).forEach(function([_, schedule]) {
+        let trainId = `${schedule.activationId}/${schedule.scheduleId}`
+        scheduleDict[trainId] = schedule
+        DisplayLiveTrainPositions(trainId)
+      })
+    }
+  }
+  else{
+    previous_datetime_date = datetime_date
+    scheduleDict = {}
+    getData(api_schedule + "/" + datetime_date)
+      .then((json) => {
+        for (let schedule of json) {
+          let trainId = `${schedule.activationId}/${schedule.scheduleId}`
+          scheduleDict[trainId] = schedule
+          DisplayLiveTrainPositions(trainId)
         }
-    })
-    .catch(err => console.log("Error: " + err))
+      })
+      .catch(err => console.log("Error: " + err))
+  }
 }
 
 async function getData(url) {

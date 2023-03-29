@@ -10,7 +10,7 @@
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
-  box-shadow:0 0 5px grey;
+  box-shadow: 0 0 5px grey;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -23,37 +23,44 @@
 
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .container{
-    max-width: 680px;
-    margin:auto;
-  }
-  label {
-    display: block;
-  }
-  form>div{
-    margin-bottom: 15px;
-  }
-  input[type="text"],
-  textarea {
-    font-size: 1.2rem;
-    padding: 4px;
-  }
-  div.radio{
-    display: flex;
-  }
-  div.radio > label{
-    display: inline;
-    flex: 0 0 50px;
-  }
-  div.radio > label > input{
-    margin-right: 10px;
-  }
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 680px;
+  margin: auto;
+}
+
+label {
+  display: block;
+}
+
+form>div {
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+textarea {
+  font-size: 1.2rem;
+  padding: 4px;
+}
+
+div.radio {
+  display: flex;
+}
+
+div.radio>label {
+  display: inline;
+  flex: 0 0 50px;
+}
+
+div.radio>label>input {
+  margin-right: 10px;
+}
 
 button {
   background: none;
@@ -67,6 +74,7 @@ button {
   position: relative;
   font-size: 0.9rem;
 }
+
 button::after {
   content: '';
   display: block;
@@ -78,9 +86,11 @@ button::after {
   background-color: black;
   transition: width 0.2s ease-in-out;
 }
+
 button:hover::after {
   width: 100%;
 }
+
 footer {
   background-color: #232f3e;
   height: 50px;
@@ -99,7 +109,7 @@ footer {
   padding: 0;
 }
 
-/*Sidebar*/
+/*Sidebar*/ 
 #sidebar {
   width: 210px;
   background-color: #e6f0f5;
@@ -120,7 +130,7 @@ footer {
   z-index: 999;
 }
 
-/*map*/
+/*map*/ 
 #leafletmap {
   height: 500px;
   width: calc(100%-100px);
@@ -128,11 +138,12 @@ footer {
   padding-left: 20px;
 }
 
-/*nav*/ 
-#header{
+/*nav*/
+ #header {
   font-size: 24px;
   text-align: center;
 }
+
 nav {
   background-color: #232f3e;
   height: 60px;
@@ -162,8 +173,8 @@ nav a {
   font-weight: 600;
   margin-left: 20px;
   transition: color 0.3s ease-in-out;
-  display: inline-block; /* add this line */
-  white-space: nowrap; /* add this line */
+  display: inline-block;
+  white-space: nowrap;
 }
 
 
@@ -202,19 +213,21 @@ nav a:hover:before {
   transform: scaleX(1);
   transform-origin: left;
 }
-#hide{
+
+#hide {
   display: none;
 }
 
-#hide-train{
+#hide-train {
   display: none;
 }
 
-input{
+input {
   width: 180px;
   height: 10px;
 }
-img{
+
+img {
   width: auto;
   height: 30px;
   margin: auto;
@@ -257,15 +270,15 @@ ul {
   padding: 0;
 }
 
-#email
-#phone{
-color:#ffffff ;
+#email #phone {
+  color: #ffffff;
 
 }
 
 #map-container {
   position: relative;
 }
+
 #sidebar h3 {
   margin-top: 0;
   font-size: 1.5rem;
@@ -310,35 +323,35 @@ color:#ffffff ;
   height: 30px;
 }
 
-.leaflet-popup-content{
+.leaflet-popup-content {
   text-align: center;
 }
 
-.sidebar_p{
+.sidebar_p {
   background-color: #EEEEEE;
 }
 
-.planned{
+.planned {
   color: black;
 }
 
-.late{
+.late {
   color: red;
 }
 
-.earlyontime{
+.earlyontime {
   color: darkgreen;
 }
 
-.noreport{
+.noreport {
   color: darkslategray;
 }
 
-.future{
+.future {
   color: blue;
 }
 
-#map-info{
+#map-info {
   position: absolute;
   display: flex;
   bottom: 50px;
@@ -366,16 +379,16 @@ color:#ffffff ;
   flex: 1;
 }
 
-#date-time_form{
+#date-time_form {
   flex-direction: column;
   display: flex;
 }
 
-#date-time_viewing{
+#date-time_viewing {
   margin: auto;
 }
 
-#date-time_update{
+#date-time_update {
   border-radius: 5px;
   text-align: center;
   margin-bottom: 5px;
