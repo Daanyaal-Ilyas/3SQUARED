@@ -1,82 +1,116 @@
-/*nav*/ 
-#header{
-  font-size: 24px;
-  text-align: center;
-}
-nav {
-  background-color: #232f3e;
-  height: 60px;
+body {
+  background-color:#ffffff; 
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  margin: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  text-align: center;
+  flex-direction: column;
+}
+
+
+footer {
+background-color: #232f3e;
+height: 50px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+border-top: 1px solid #000;
+font-size: 1.2em;
+font-family: Arial, sans-serif;
+color: #ffffff;
+margin: 0;
+padding: 0;
+}
+
+
+
+#header{
+font-size: 24px;
+text-align: center;
+
+}
+
+nav {
+background-color: #232f3e;
+height: 60px;
+display:flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 20px;
+text-align: center;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: inline-block;
-  white-space: nowrap;
+list-style-type: none;
+padding: 0;
+margin: 0;
+display: inline-block;
+white-space: nowrap;
 }
 
 li {
-  display: inline-block;
+display: inline-block;
 }
 
 nav a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: 20px;
-  transition: color 0.3s ease-in-out;
-  display: inline-block; 
-  white-space: nowrap; 
+text-decoration: none;
+color: #fff;
+font-size: 18px;
+font-weight: 500;
+margin-left: 20px;
+transition: color 0.3s ease-in-out;
+display: inline-block; 
+white-space: nowrap;  
 }
 
 
 nav a:hover {
-  color: #fdb813;
+color: #fdb813;
 }
 
 nav ul {
-  display: flex;
-  list-style: none;
-  width: auto;
-  height: 30px;
-  margin: auto;
-  margin-right: 25px;
+display: flex;
+list-style: none;
+width: auto;
+height: 30px;
+margin: auto;
+margin-right: 25px;
+margin-top: 19.5px;
 }
 
 nav li {
-  margin: 0 10px;
+margin: 0 10px;
 }
 
 nav a:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #fdb813;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease-in-out;
+content: "";
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+height: 2px;
+background-color: #fdb813;
+transform: scaleX(0);
+transform-origin: right;
+transition: transform 0.3s ease-in-out;
 }
 
 
 nav a:hover:before {
-  transform: scaleX(1);
-  transform-origin: left;
+transform: scaleX(1);
+transform-origin: left;
 }
 
+img{
+width: auto;
+height: 30px;
+margin: auto;
+}
 
-body {
-    background-color:#ffffff; 
-  }
   #contactinfo{
     font-family: Arial, sans-serif;
     font-size: 20px;
