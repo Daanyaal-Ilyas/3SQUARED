@@ -322,10 +322,13 @@ function BindPopup(element, text, timeInfo = "") {
 
 const showAllTrainsBtn = document.getElementById("showAllTrainsBtn");
 
+var isTrainHighlighted = false;
+
 function OnTrainClicked(trainId) {
   let sidebar = document.getElementById("sidebar");
   if (sidebar.dataset.selectedTrainId === trainId) {
     // hide sidebar and reset selectedTrainId
+    isTrainHighlighted = false;
     HideSidebar();
     if (routeLine) {
       map.removeLayer(routeLine);
@@ -338,15 +341,29 @@ function OnTrainClicked(trainId) {
       }
     });
   } else {
-    sidebar.style.display = "block";
+    if(isTrainHighlighted){
+      DisplayTrainRoute(trainId);
+      map.eachLayer(function(layer) {
+        if (layer.options.icon === trainIcon && layer.options.trainId !== trainId) {
+          layer.setOpacity(0.2);
+        } 
+        else if (layer.options.trainId == trainId) {
+          layer.setOpacity(1.0)
+        }
+      });
+    }
+    else{
+      isTrainHighlighted = true;
+      sidebar.style.display = "block";
+      DisplayTrainRoute(trainId);
+      // hide all train markers except for the selected one
+      map.eachLayer(function(layer) {
+        if (layer.options.icon === trainIcon && layer.options.trainId !== trainId) {
+          layer.setOpacity(0.2);
+        }
+      });
+    }
     sidebar.dataset.selectedTrainId = trainId;
-    DisplayTrainRoute(trainId);
-    // hide all train markers except for the selected one
-    map.eachLayer(function(layer) {
-      if (layer.options.icon === trainIcon && layer.options.trainId !== trainId) {
-        layer.setOpacity(0);
-      }
-    });
   }
 }
 
