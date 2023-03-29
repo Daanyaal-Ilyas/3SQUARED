@@ -64,8 +64,12 @@
         <div id="map-info">
           <div id="map-legend"></div>
           <button id="showAllTrainsBtn" style="display:none;">Show All Trains</button>
-          <div>
-            <form action="" id="date-time">
+          <div id="date-time">
+            <div id="date-time_update">
+              <div>Now Viewing</div>
+              <div id="date-time_update_time">{time}</div>
+            </div>
+            <form id="date-time_form">
               <input type="datetime-local" class="datetime" id="datetime_dt" name="dt">
               <input type="submit" value="Submit" id="datetime_s">
             </form>
@@ -81,18 +85,27 @@
   </body>
   <script src="leafletmap.js"></script>
   <script>
-    Refresh(new Date().toISOString())
+    var dateString = new Date().toISOString()
+    SetNowViewing(dateString)
+    Refresh(dateString)
 
     interval = 5
     var intervalId = setInterval(() => {
-      Refresh(new Date().toISOString())
+      var dateString = new Date().toISOString()
+      SetNowViewing(dateString)
+      Refresh(dateString)
     }, interval * 60000);
 
     $('#date-time').submit(function(e){
       e.preventDefault()
       var date = $('#datetime_dt').val()
+      SetNowViewing(date)
       Refresh(date)
       clearInterval(intervalId)
     })
+
+    function SetNowViewing(dateString){
+      $('#date-time_update_time').html(dateString.slice(0, 16).replace('T', ' '))
+    }
   </script>
 </html>
