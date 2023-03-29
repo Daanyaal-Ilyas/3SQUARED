@@ -109,8 +109,7 @@ footer {
   padding: 0;
 }
 
-/*Sidebar*/ 
-#sidebar {
+/*Sidebar*/ #sidebar {
   width: 210px;
   background-color: #e6f0f5;
   float: left;
@@ -138,8 +137,8 @@ footer {
   padding-left: 20px;
 }
 
-/*nav*/
- #header {
+/*nav*/ 
+#header {
   font-size: 24px;
   text-align: center;
 }
