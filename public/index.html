@@ -99,6 +99,7 @@
     $('#date-time').submit(function(e){
       e.preventDefault()
       var date = $('#datetime_dt').val()
+      if(date == "") return;
       SetNowViewing(date)
       Refresh(date)
       clearInterval(intervalId)
