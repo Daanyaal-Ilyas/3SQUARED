@@ -112,6 +112,7 @@ margin: auto;
 }
 
   #contactinfo{
+    position: relative;
     font-family: Arial, sans-serif;
     font-size: 20px;
     line-height: 1.5;
@@ -125,6 +126,7 @@ margin: auto;
   }
   #SoftwaresupportDesk,
   #location{
+    position: relative;
     font-family: Arial, sans-serif;
     font-size: 20px;
     line-height: 1.5;
