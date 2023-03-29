@@ -76,10 +76,7 @@ function Refresh(dateString) {
   RemoveTrainMarkers()
 
   if(previous_datetime_date){
-    console.log(previous_datetime_date)
-    console.log(datetime_date)
     if(!datetime_date == previous_datetime_date){
-      console.log("!datetime_date == previous_datetime_date")
       scheduleDict = {}
       getData(api_schedule + "/" + datetime_date)
         .then((json) => {
@@ -92,7 +89,6 @@ function Refresh(dateString) {
         .catch(err => console.log("Error: " + err))
     }
     else{
-      console.log("datetime_date == previous_datetime_date")
       Object.entries(scheduleDict).forEach(function([_, schedule]) {
         let trainId = `${schedule.activationId}/${schedule.scheduleId}`
         scheduleDict[trainId] = schedule
