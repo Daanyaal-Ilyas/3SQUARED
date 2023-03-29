@@ -45,6 +45,7 @@ var trainMarkers = new Array();
 
 var routeLine = null;
 
+var scheduleJson;
 // Array: trainId: schedule | Schedules
 var scheduleDict = {};
 // Array: trainId: trainSchedule | Train Schedule, do not get directly, use GetTrainSchedule
@@ -54,53 +55,32 @@ var liveTrainDataDict = {};
 // Array: trainId: Array: tiploc: trainData  | Live Train Data, Train Movements, Each holds a Map: tiploc: trainData
 var filtered_liveTrainDataDict = {};
 
-var previous_datetime_date = null;
+var previous_datetime_date = "";
 
 CreateLegend()
 
-function Refresh(dateString) {
-  console.log(dateString)
-  datetime = new Date(dateString)
-  var dt = datetime.toISOString().split('T')
-  datetime_date = dt[0]
-  datetime_time = dt[1]
+function Refresh(datetimeString) {
+  var split_datetimeString = datetimeString.split(" ")
+  datetime_date = split_datetimeString[0]
+  datetime_time = split_datetimeString[1]
+  datetime = new Date(datetime_date + " " + datetime_time)
 
+  scheduleDict = {}
   trainScheduleDict = {}
   liveTrainDataDict = {}
   filtered_liveTrainDataDict = {}
   if (routeLine) {
-    map.removeLayer(routeLine);
+      map.removeLayer(routeLine);
   }
 
   RemoveAllMarkers()
   RemoveTrainMarkers()
 
-  if(previous_datetime_date){
-    if(!datetime_date == previous_datetime_date){
-      scheduleDict = {}
-      getData(api_schedule + "/" + datetime_date)
-        .then((json) => {
-          for (let schedule of json) {
-            let trainId = `${schedule.activationId}/${schedule.scheduleId}`
-            scheduleDict[trainId] = schedule
-            DisplayLiveTrainPositions(trainId)
-          }
-        })
-        .catch(err => console.log("Error: " + err))
-    }
-    else{
-      Object.entries(scheduleDict).forEach(function([_, schedule]) {
-        let trainId = `${schedule.activationId}/${schedule.scheduleId}`
-        scheduleDict[trainId] = schedule
-        DisplayLiveTrainPositions(trainId)
-      })
-    }
-  }
-  else{
+  if(!scheduleJson || previous_datetime_date != datetime_date){
     previous_datetime_date = datetime_date
-    scheduleDict = {}
     getData(api_schedule + "/" + datetime_date)
       .then((json) => {
+        scheduleJson = json
         for (let schedule of json) {
           let trainId = `${schedule.activationId}/${schedule.scheduleId}`
           scheduleDict[trainId] = schedule
@@ -108,6 +88,14 @@ function Refresh(dateString) {
         }
       })
       .catch(err => console.log("Error: " + err))
+  }
+  else {
+    previous_datetime_date = datetime_date
+    for (let schedule of scheduleJson) {
+      let trainId = `${schedule.activationId}/${schedule.scheduleId}`
+      scheduleDict[trainId] = schedule
+      DisplayLiveTrainPositions(trainId)
+    }
   }
 }
 
@@ -221,7 +209,8 @@ function DisplayTrainRoute(trainId) {
         }
         latLngs.push([lat, long]);
 
-        routeLine = L.polyline(latLngs, {color: 'cyan', weight: 10}).addTo(map);
+        routeLine = L.polyline(latLngs, {color: '#3388ff', weight: 8, opacity: 0.8, dashArray: '7 7',}).addTo(map);
+
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
         BindPopup(marker, station.tiploc,  timeInfo);

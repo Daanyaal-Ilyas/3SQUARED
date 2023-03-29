@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="refresh"/>
+    <meta http-equiv="refresh" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,40 +44,44 @@
     </style>
     <title>Train Tracker</title>
   </head>
+
   <body>
     <header>
-      <nav>  
+      <nav>
         <a href="/">
-          <img src="https://3squared.com/wp-content/themes/ep-morris/assets/images/3Squared-Logo-white.png"/>
+          <img
+            src="https://3squared.com/wp-content/themes/ep-morris/assets/images/3Squared-Logo-white.png"
+          />
         </a>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact Us</a></li>
-        </ul>  
+        </ul>
       </nav>
     </header>
     <div id="map-container" style="height: calc(100% - 110px)">
       <div id="sidebar"></div>
-      <div style="height: 100%; position: relative;">
-        <div id="leafletmap" style="height: 100%; "></div>
+      <div style="height: 100%; position: relative">
+        <div id="leafletmap" style="height: 100%"></div>
         <div id="map-info">
           <div id="map-legend"></div>
-          <button id="showAllTrainsBtn" style="display:none;">Show All Trains</button>
+          <button id="showAllTrainsBtn" style="display: none">
+            Show All Trains
+          </button>
           <div id="date-time">
             <div id="date-time_update">
               <div>Now Viewing</div>
               <div id="date-time_update_time">{time}</div>
             </div>
             <form id="date-time_form">
-              <input type="datetime-local" class="datetime" id="datetime_dt" name="dt">
-              <input type="submit" value="Submit" id="datetime_s">
+              <input type="datetime-local" class="datetime" id="datetime_dt" />
+              <input type="submit" value="Submit" id="datetime_s" />
             </form>
           </div>
         </div>
       </div>
-    </div>
-    <div id="dom"></div>
+      <div id="dom"></div>
     </div>
     <footer>
       <b>&copy; 2023 3Squared</b>
@@ -85,28 +89,49 @@
   </body>
   <script src="leafletmap.js"></script>
   <script>
-    var dateString = new Date().toISOString()
-    SetNowViewing(dateString)
-    Refresh(dateString)
+    const options = {
+      timeZone: "Europe/London",
+    };
 
-    interval = 1
+    var date = GetCurrentDateTime();
+    SetNowViewing(date);
+    Refresh(date);
+
+    interval = 1;
     var intervalId = setInterval(() => {
-      var dateString = new Date().toISOString()
-      SetNowViewing(dateString)
-      Refresh(dateString)
+      var date = GetCurrentDateTime();
+      SetNowViewing(date);
+      Refresh(date);
     }, interval * 60000);
 
-    $('#date-time').submit(function(e){
-      e.preventDefault()
-      var date = $('#datetime_dt').val()
-      if(date == "") return;
-      SetNowViewing(date)
-      Refresh(date)
-      clearInterval(intervalId)
-    })
+    $("#date-time_form").submit(function (e) {
+      e.preventDefault();
+      var date = $("#datetime_dt").val();
+      if (date == "") return;
+      date = date.replace("T", " ");
+      SetNowViewing(date);
+      Refresh(date);
+      clearInterval(intervalId);
+    });
 
-    function SetNowViewing(dateString){
-      $('#date-time_update_time').html(dateString.slice(0, 16).replace('T', ' '))
+    function SetNowViewing(date) {
+      $("#date-time_update_time").html(ToDateString(date));
+    }
+
+    function GetCurrentDateTime() {
+      var date = new Date();
+      var dateString = date.toLocaleString("en-GB", options).split(", ");
+      return (
+        dateString[0].split("/").reverse().join("-") +
+        " " +
+        dateString[1].split(":")[0] +
+        ":" +
+        dateString[1].split(":")[1]
+      );
+    }
+
+    function ToDateString(date) {
+      return date.toLocaleString("en-GB", options);
     }
   </script>
 </html>
