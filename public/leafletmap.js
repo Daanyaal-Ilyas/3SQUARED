@@ -74,7 +74,7 @@ function Refresh(dateString) {
     RemoveAllMarkers()
     RemoveTrainMarkers()
 
-    //TODO have this only run when the date is a new date
+    // only run when the date is a new date
     getData(api_schedule + "/" + datetime_date)
     .then((json) => {
         for (let schedule of json) {
