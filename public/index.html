@@ -89,7 +89,7 @@
     SetNowViewing(dateString)
     Refresh(dateString)
 
-    interval = 1
+    interval = 5
     var intervalId = setInterval(() => {
       var dateString = new Date().toISOString()
       SetNowViewing(dateString)
@@ -99,7 +99,6 @@
     $('#date-time').submit(function(e){
       e.preventDefault()
       var date = $('#datetime_dt').val()
-      if(date == "") return;
       SetNowViewing(date)
       Refresh(date)
       clearInterval(intervalId)
