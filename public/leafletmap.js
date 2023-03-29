@@ -73,6 +73,8 @@ function Refresh(datetimeString) {
       map.removeLayer(routeLine);
   }
 
+  HideSidebar()
+
   RemoveAllMarkers()
   RemoveTrainMarkers()
 
@@ -97,6 +99,10 @@ function Refresh(datetimeString) {
       DisplayLiveTrainPositions(trainId)
     }
   }
+}
+
+function SetIsLoading(val){
+  isLoading = val
 }
 
 async function getData(url) {
@@ -149,6 +155,7 @@ function DisplayTrainRoute(trainId) {
     sidebar.innerHTML = `<p>Train UID<br>${scheduleDict[trainId].trainUid}</p>`;
     sidebar.innerHTML += `<p>Departure<br>${schedule[0].location}</p>`;
     sidebar.innerHTML += `<p>Destination<br>${schedule[schedule.length - 1].location}</p>`;
+    sidebar.style.display = "block";
 
  
     // Add list of stations to sidebar
@@ -265,6 +272,14 @@ function DisplayLiveTrainPositions(trainId) {
             marker.on('click', function () { OnTrainClicked(trainId) })
             trainMarkers.push(marker)
             BindPopup(marker, scheduleDict[trainId].toc_Name)
+            if(sidebar.dataset.selectedTrainId){
+              if(sidebar.dataset.selectedTrainId == trainId){
+                DisplayTrainRoute(trainId)
+              }
+              else{
+                marker.setOpacity(0.2)
+              }
+            }
           }
         }
       }
@@ -330,6 +345,7 @@ function OnTrainClicked(trainId) {
     // hide sidebar and reset selectedTrainId
     isTrainHighlighted = false;
     HideSidebar();
+    sidebar.dataset.selectedTrainId = null;
     if (routeLine) {
       map.removeLayer(routeLine);
     }
@@ -354,7 +370,6 @@ function OnTrainClicked(trainId) {
     }
     else{
       isTrainHighlighted = true;
-      sidebar.style.display = "block";
       DisplayTrainRoute(trainId);
       // hide all train markers except for the selected one
       map.eachLayer(function(layer) {
@@ -370,7 +385,6 @@ function OnTrainClicked(trainId) {
 function HideSidebar() {
   let sidebar = document.getElementById("sidebar");
   sidebar.style.display = "none";
-  sidebar.dataset.selectedTrainId = "";
 }
 
 function GetCurrentDate(){
