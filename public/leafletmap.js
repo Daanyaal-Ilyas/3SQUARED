@@ -73,8 +73,8 @@ function Refresh(datetimeString) {
       map.removeLayer(routeLine);
   }
 
-  RemoveAllMarkers()
-  RemoveTrainMarkers()
+    RemoveAllMarkers()
+    RemoveTrainMarkers()
 
   if(!scheduleJson || previous_datetime_date != datetime_date){
     previous_datetime_date = datetime_date
