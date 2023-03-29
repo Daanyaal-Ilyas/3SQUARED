@@ -73,8 +73,8 @@ function Refresh(datetimeString) {
       map.removeLayer(routeLine);
   }
 
-    RemoveAllMarkers()
-    RemoveTrainMarkers()
+  RemoveAllMarkers()
+  RemoveTrainMarkers()
 
   if(!scheduleJson || previous_datetime_date != datetime_date){
     previous_datetime_date = datetime_date
@@ -327,6 +327,10 @@ function OnTrainClicked(trainId) {
   if (sidebar.dataset.selectedTrainId === trainId) {
     // hide sidebar and reset selectedTrainId
     HideSidebar();
+    if (routeLine) {
+      map.removeLayer(routeLine);
+    }
+    RemoveAllMarkers()
     // show all train markers
     map.eachLayer(function(layer) {
       if (layer.options.icon === trainIcon) {
