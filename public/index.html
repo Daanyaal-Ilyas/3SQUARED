@@ -56,9 +56,8 @@
       <div id="leafletmap" style="height: 100%; "></div>
       <div id="map-info">
         <div id="map-legend"></div>
-        <button id="showAllTrainsBtn" style="display:none;">Show All Trains</button>
         <div id="date-time">
-          <div id="date-time_update">
+          <div class="map-info-header">
             <div>Now Viewing</div>
             <div id="date-time_update_time">{time}</div>
           </div>
@@ -67,6 +66,15 @@
             <input type="submit" value="Request" id="datetime_s">
           </form>
         </div>
+      </div>
+      <div id="refresh-display">
+        <div class="map-info-header">Live Updates</div>
+        <div class="progress">
+          <div id="refresh-display_bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+          <form id="refresh_form">
+            <input type="submit" value="Refresh" id="refresh_s">
+          </form>
       </div>
       <div id="dom"></div>
     </div>
@@ -80,16 +88,37 @@
       timeZone: "Europe/London",
     };
 
-    var date = GetCurrentDateTime();
-    SetNowViewing(date);
-    Refresh(date);
+    OnRefresh();
 
-    interval = 1;
-    var intervalId = setInterval(() => {
+    var elapsedTime = 0;
+    var refreshTime = 1 * 60000;
+    var updateTime = 5 * 1000;
+
+    var intervalId = setInterval(() => { 
+      IntervalRefresh()
+    }, updateTime);
+
+    function IntervalRefresh(){
+      elapsedTime += updateTime
+      UpdateRefreshProgess(elapsedTime / refreshTime)
+      if(elapsedTime >= refreshTime){
+        elapsedTime = 0;
+        UpdateRefreshProgess(0)
+        OnRefresh()
+      }
+    }
+
+    function UpdateRefreshProgess(val){
+      val = val * 100;
+      $("#refresh-display_bar").attr("aria-valuenow", val)
+      $("#refresh-display_bar").css("width", val + "%")
+    }
+
+    function OnRefresh(){
       var date = GetCurrentDateTime();
       SetNowViewing(date);
       Refresh(date);
-    }, interval * 60000);
+    }
 
     $("#date-time_form").submit(function (e) {
       e.preventDefault();
@@ -99,7 +128,19 @@
       SetNowViewing(date);
       Refresh(date);
       clearInterval(intervalId);
+      UpdateRefreshProgess(0)
     });
+
+    $("#refresh_form").submit(function(e) {
+      e.preventDefault();
+      clearInterval(intervalId)
+      elapsedTime = 0
+      UpdateRefreshProgess(0)
+      OnRefresh()
+      intervalId = setInterval(() => { 
+        IntervalRefresh()
+      }, updateTime);
+    })
 
     function SetNowViewing(date) {
       $("#date-time_update_time").html(ToDateString(date));
@@ -108,12 +149,13 @@
     function GetCurrentDateTime() {
       var date = new Date();
       var dateString = date.toLocaleString("en-GB", options).split(", ");
+      var dateStringTimeSplit = dateString[1].split(":")
       return (
         dateString[0].split("/").reverse().join("-") +
         " " +
-        dateString[1].split(":")[0] +
+        dateStringTimeSplit[0] +
         ":" +
-        dateString[1].split(":")[1]
+        dateStringTimeSplit[1]
       );
     }
 

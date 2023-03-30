@@ -203,7 +203,8 @@ function DisplayTrainRoute(trainId) {
             }
             timeInfo = `Planned: ${plannedDate}<br>Actual: ${actualDate}`
           }
-
+          console.log(station.tiploc)
+          console.log(trainAtStation)
           if(station.tiploc == trainAtStation) isFuture = true
           
         } else {
@@ -220,7 +221,7 @@ function DisplayTrainRoute(trainId) {
 
         let marker = L.marker([lat, long], { icon: icon }).addTo(map);
         markers.push(marker);
-        BindPopup(marker, station.tiploc,  timeInfo);
+        BindPopup(marker, station.tiploc, timeInfo);
 
         sidebar_timetable.innerHTML += 
         `
@@ -271,7 +272,7 @@ function DisplayLiveTrainPositions(trainId) {
             marker.addTo(map)
             marker.on('click', function () { OnTrainClicked(trainId) })
             trainMarkers.push(marker)
-            BindPopup(marker, scheduleDict[trainId].toc_Name)
+            BindPopup(marker, scheduleDict[trainId].toc_Name + "<br>" + scheduleDict[trainId].trainUid)
             if(sidebar.dataset.selectedTrainId){
               if(sidebar.dataset.selectedTrainId == trainId){
                 DisplayTrainRoute(trainId)

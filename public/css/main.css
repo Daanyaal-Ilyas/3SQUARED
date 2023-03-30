@@ -303,8 +303,7 @@
  }
 
  .progress-bar {
-   height: 20px;
-   width: 90%;
+   height: 100%;
    background-color: #f2f2f2;
    border-radius: 10px;
    margin-bottom: 10px;
@@ -383,15 +382,32 @@
  #date-time_form {
    flex-direction: column;
    display: flex;
+   margin: auto;
  }
 
  #date-time_viewing {
    margin: auto;
  }
 
- #date-time_update {
+ .map-info-header {
    border-radius: 5px;
    text-align: center;
    margin-bottom: 5px;
    background-color: rgba(255, 255, 255, 0.8);
+ }
+
+ #refresh-display{
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  z-index: 1000;
+  padding: 10px;
+  margin: 10px;
+  position: absolute;
+  top: 10px;
+  right: 100px;
+ }
+
+ #refresh_s{
+  height: 40px;
+  margin-top: 5px;
  }
