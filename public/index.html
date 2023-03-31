@@ -169,6 +169,7 @@
       e.preventDefault();
       clearInterval(intervalId);
       elapsedTime = 0;
+      refreshSecondsLeft = refreshSeconds;
       UpdateRefreshProgess(0);
       OnRefresh();
       intervalId = setInterval(() => {
