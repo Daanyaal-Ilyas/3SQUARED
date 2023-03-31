@@ -101,10 +101,6 @@ function Refresh(datetimeString) {
   }
 }
 
-function SetIsLoading(val){
-  isLoading = val
-}
-
 async function getData(url) {
   const response = await fetch(url)
   const json = await response.json()
