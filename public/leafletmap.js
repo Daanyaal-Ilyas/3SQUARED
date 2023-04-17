@@ -199,8 +199,6 @@ function DisplayTrainRoute(trainId) {
             }
             timeInfo = `Planned: ${plannedDate}<br>Actual: ${actualDate}`
           }
-          console.log(station.tiploc)
-          console.log(trainAtStation)
           if(station.tiploc == trainAtStation) isFuture = true
           
         } else {
