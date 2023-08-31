@@ -16,7 +16,7 @@ async function GetSchedule(date) {
         method: 'GET',
         headers: {
             'X-ApiVersion': "1",
-            'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
+            'X-ApiKey': ''
         }
     };
     const apiResp = await fetch(url, options);
@@ -50,7 +50,7 @@ app.get("/api/trainschedule/:activationId/:scheduleId", async function (req, res
         method: 'GET',
         headers: {
             'X-ApiVersion': "1",
-            'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
+            'X-ApiKey': ''
         }
     };
     const apiResp2 = await fetch(url, options);
@@ -67,7 +67,7 @@ app.get("/api/livetrain/:activationId/:scheduleId", async function (req, resp) {
         method: 'GET',
         headers: {
             'X-ApiVersion': "1",
-            'X-ApiKey': 'AA26F453-D34D-4EFC-9DC8-F63625B67F4A'
+            'X-ApiKey': ''
         }
     };
     const apiResp = await fetch(url, options);
