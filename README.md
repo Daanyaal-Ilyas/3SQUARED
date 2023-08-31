@@ -3,6 +3,7 @@ Train Tracking App
 ---------------------------------------------------------------------------------------
 This is a Node.js web application for tracking live train data using the 3Squared API.
 
+Project Showcase Video : https://www.youtube.com/watch?v=j87eVCacciM
 ---------------------------------------------------------------------------------------
 Installation
 ---------------------------------------------------------------------------------------
